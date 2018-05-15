@@ -43,6 +43,7 @@ namespace MHXXSaveEditor
             slot1ToolStripMenuItem.Enabled = false;
             slot2ToolStripMenuItem.Enabled = false;
             slot3ToolStripMenuItem.Enabled = false;
+            convertToolStripMenuItem.Enabled = false;
 
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -66,9 +67,10 @@ namespace MHXXSaveEditor
             if (saveFileRaw.Length == 4726152)
             {
                 MessageBox.Show($"Detected a 3DS save", "3DS");
+                toSwitchToolStripMenuItem.Enabled = true;
                 switchMode = false;
             }
-            if (saveFileRaw.Length == SWITCH_SAVE_SIZE)
+            else if (saveFileRaw.Length == SWITCH_SAVE_SIZE)
             {
                 MessageBox.Show($"Detected a Switch save", "Switch");
                 switchMode = true;
@@ -123,6 +125,7 @@ namespace MHXXSaveEditor
             editToolStripMenuItem.Enabled = true;
             saveAsToolStripMenuItem.Enabled = true;
             tabControlMain.Enabled = true;
+            convertToolStripMenuItem.Enabled = true;
 
             // Extract data from save file
             var ext = new DataExtractor();
@@ -1454,6 +1457,37 @@ namespace MHXXSaveEditor
                 LoadEquipmentBox();
                 MessageBox.Show("Equipment has been imported, you may find them starting from slot 800-2000", "Import Equipment Box");
             }
+        }
+
+        private void toSwitchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "All files (*.*)|*.*",
+                FilterIndex = 1
+            };
+
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                ofd.Dispose();
+                return;
+            }
+            Cursor.Current = Cursors.WaitCursor;
+            SplashScreen.ShowSplashScreen();
+            filePath = ofd.FileName;
+            Text = string.Format("{0} [{1}]", Constants.EDITOR_VERSION, ofd.SafeFileName); // Changes app title
+            byte[] _saveFileRaw = File.ReadAllBytes(ofd.FileName); // Read all bytes from file into memory buffer
+
+            ofd.Dispose();
+
+            if (_saveFileRaw.Length != SWITCH_SAVE_SIZE)
+            {
+                MessageBox.Show($"Not a valid switch save", "Error");
+                return;
+            }
+            switchMode = true;
+            saveFileRaw = _saveFileRaw;
+            MessageBox.Show($"You are now editing the switch version of this save", "Conversion complete");
         }
 
         private void ListViewPalicoEquipment_SelectedIndexChanged(object sender, EventArgs e)
