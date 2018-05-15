@@ -12,6 +12,11 @@ USAGE:
 5. Place both the edited system file and the system_backup back on the sd card of your switch
 6. Import the saves with your save manager
 
+CONVERTING: 
+1. Start by loading the 3DS save file
+2. In the convert menu select "To Switch"
+3. Save the file and import it on the switch
+
 I do not know if it is important but to be sure but do not change the name of the saves, keep them system and system_backup
 
 Based off: https://github.com/mineminemine/MHXXSaveEditor/
