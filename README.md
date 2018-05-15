@@ -13,3 +13,5 @@ USAGE:
 6. Import the saves with your save manager
 
 I do not know if it is important but to be sure but do not change the name of the saves, keep them system and system_backup
+
+Based off: https://github.com/mineminemine/MHXXSaveEditor/
