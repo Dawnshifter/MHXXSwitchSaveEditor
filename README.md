@@ -15,7 +15,8 @@ USAGE:
 CONVERTING: 
 1. Start by loading the 3DS save file
 2. In the convert menu select "To Switch"
-3. Save the file and import it on the switch
+3. Select your extracted switch save file (just an empty one, needs to be created by your switch)
+4. Save the file and import it on the switch
 
 I do not know if it is important but to be sure but do not change the name of the saves, keep them system and system_backup
 
