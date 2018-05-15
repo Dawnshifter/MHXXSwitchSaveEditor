@@ -1,8 +1,8 @@
 # MHXXSwitchSaveEditor
-A save editor for Monster Hunter XX Switch and 3DS versions
-FIRST VERSION
-NOT TESTED THOROUGHLY ALWAYS MAKE A BACK UP
-THIS CAN AND PROBABLY WILL RUIN YOUR SAVE
+A save editor for Monster Hunter XX Switch and 3DS versions \n
+FIRST VERSION \n
+NOT TESTED THOROUGHLY ALWAYS MAKE A BACK UP \n
+THIS CAN AND PROBABLY WILL RUIN YOUR SAVE \n
 
 USAGE:
 1. Extract MHXX save file with your save manager (switch tested with Checkpoint)
