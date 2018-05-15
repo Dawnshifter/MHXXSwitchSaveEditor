@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="MHXXSaveEditor.exe" version="1.0.0.0" publicKeyToken="ef8371c5e8c079c8" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="MHXXSaveEditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="MHXXSaveEditor.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MHXXSaveEditor.exe" size="2200496">
+      <assemblyIdentity name="MHXXSaveEditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>jpL+w8y6C+k6r1LxdEgMMwv/aWw=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="icon.ico" size="141910">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>Qgfbr5rG1SwicSdTYSvJ/ftWbIA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="MHXXSaveEditor.exe.config" size="178">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>uLqUSh7iUjUSmYLdnc04bU5agXg=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=DESKTOP-N7GP3PA\Jan" issuerKeyHash="32c009abcd2c5c6ceb2f9709faab384d82862f91" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>k19m8b5qFIiQBfcB7lfBRfgaMVI=</DigestValue></Reference></SignedInfo><SignatureValue>jXXtLpD/FqTEwP27tAMFS7IEiqYw+SFDBEI1RU8MzBRzNbPzY7FATWWWbFEsGZNKQ9QtXJ7rrn+AWmTB55fUxlcTC8dLHQJi1YdyRyNNhSGqQu1K8eNFlyW71qBxMQ2jo1TBWL6RJBK9b4COrNGOCxvsfuLepBa9QGYb1AWeYIY=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>vb0nZe2O0OkwV+jn/QcUigIduI89Qju5LHcFJnk/2n1zHW428aID3KjrY47Vu38r02nNE2OYVKgDRI9ivj4KB7gEBfLKtoJ7EUuzFPv19bmHKdJt0T0f8W5Te0LahwDb2TnseRUo8yXF46wGKhlpb1SRhdXoNbwYo0oXXcshA5k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="52311af845c157ee01f7059088146abef1665f93" Description="" Url=""><as:assemblyIdentity name="MHXXSaveEditor.exe" version="1.0.0.0" publicKeyToken="ef8371c5e8c079c8" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-N7GP3PA\Jan</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>kBEOM14w6qY8W0ZEMNlQvQt0pFA=</DigestValue></Reference></SignedInfo><SignatureValue>Vdf51hYlu6OJfxpJgCYzkd6n7C6rYxyZchCmBRBTtpYw38mf/WU2pR+F0OeGobEwpEEajQLtaXsR+ZljwtgIsDwTQvo5AWEa/931A1W1ywMv0RIMl/ywgoHpaLsjw5IDROEOrQLVj8nVzif3ZJ9RzfT0UXwjjw/Xrc9Bn+R7Qts=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>vb0nZe2O0OkwV+jn/QcUigIduI89Qju5LHcFJnk/2n1zHW428aID3KjrY47Vu38r02nNE2OYVKgDRI9ivj4KB7gEBfLKtoJ7EUuzFPv19bmHKdJt0T0f8W5Te0LahwDb2TnseRUo8yXF46wGKhlpb1SRhdXoNbwYo0oXXcshA5k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB5TCCAU6gAwIBAgIQKtBpND/HuY1IhGDzKS5jbDANBgkqhkiG9w0BAQUFADAxMS8wLQYDVQQDHiYARABFAFMASwBUAE8AUAAtAE4ANwBHAFAAMwBQAEEAXABKAGEAbjAeFw0xODA1MTUxNDEwMDVaFw0xOTA1MTUyMDEwMDVaMDExLzAtBgNVBAMeJgBEAEUAUwBLAFQATwBQAC0ATgA3AEcAUAAzAFAAQQBcAEoAYQBuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9vSdl7Y7Q6TBX6Of9BxSKAh24jz1CO7ksdwUmeT/afXMdbjbxogPcqOtjjtW7fyvTac0TY5hUqANEj2K+PgoHuAQF8sq2gnsRS7MU+/X1uYcp0m3RPR/xblN7QtqHANvZOex5FSjzJcXjrAYqGWlvVJGF1eg1vBijShddyyEDmQIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAC4QQ8ad001tWqEKdA5zpqQUSFjd+Q+YvGUkkhCwvm4tRkZwlXwQdyxp4MRI7wm6BsZummQ5wKFZYFhWTn+q28Qk3zuIkMmpCx8s+Dpz0NqsiMaMc8gBUDoDtmLifvMtVvUIQB0orNW1wTnkMRI23p+6eudMfivAQjdReFB4qGIf</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
