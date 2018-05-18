@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs
+/MHXXSaveEditor/bin/Debug
+/MHXXSaveEditor/obj
+/MHXXSaveEditor/bin/Release
