@@ -1461,6 +1461,8 @@ namespace MHXXSaveEditor
 
         private void toSwitchToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Please select a MHXX Switch save created by your own switch (can be an empty save file).", "Switch save");
+
             OpenFileDialog ofd = new OpenFileDialog
             {
                 Filter = "All files (*.*)|*.*",
@@ -1488,6 +1490,18 @@ namespace MHXXSaveEditor
             switchMode = true;
             saveFileRaw = _saveFileRaw;
             MessageBox.Show($"You are now editing the switch version of this save", "Conversion complete");
+        }
+
+        private void convertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void to3DSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            switchMode = false;
+            MessageBox.Show("You are now editing the 3DS version of this save.", "Coverted to 3DS");
+
         }
 
         private void ListViewPalicoEquipment_SelectedIndexChanged(object sender, EventArgs e)

@@ -61,13 +61,13 @@
             this.equipmentBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importFromToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.goToMainThreadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.visitGithubPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.convertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
             this.buttonEditGuildCard = new System.Windows.Forms.Button();
@@ -182,6 +182,7 @@
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.to3DSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.generalTab.SuspendLayout();
@@ -476,6 +477,24 @@
             this.exportToToolStripMenuItem1.Text = "Export To";
             this.exportToToolStripMenuItem1.Click += new System.EventHandler(this.ExportToToolStripMenuItem1_Click);
             // 
+            // convertToolStripMenuItem
+            // 
+            this.convertToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toSwitchToolStripMenuItem,
+            this.to3DSToolStripMenuItem});
+            this.convertToolStripMenuItem.Enabled = false;
+            this.convertToolStripMenuItem.Name = "convertToolStripMenuItem";
+            this.convertToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.convertToolStripMenuItem.Text = "Convert";
+            this.convertToolStripMenuItem.Click += new System.EventHandler(this.convertToolStripMenuItem_Click);
+            // 
+            // toSwitchToolStripMenuItem
+            // 
+            this.toSwitchToolStripMenuItem.Name = "toSwitchToolStripMenuItem";
+            this.toSwitchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.toSwitchToolStripMenuItem.Text = "To Switch";
+            this.toSwitchToolStripMenuItem.Click += new System.EventHandler(this.toSwitchToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -512,22 +531,6 @@
             this.visitGithubPageToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.visitGithubPageToolStripMenuItem.Text = "Visit Github page";
             this.visitGithubPageToolStripMenuItem.Click += new System.EventHandler(this.VisitGithubPageToolStripMenuItem_Click);
-            // 
-            // convertToolStripMenuItem
-            // 
-            this.convertToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toSwitchToolStripMenuItem});
-            this.convertToolStripMenuItem.Enabled = false;
-            this.convertToolStripMenuItem.Name = "convertToolStripMenuItem";
-            this.convertToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.convertToolStripMenuItem.Text = "Convert";
-            // 
-            // toSwitchToolStripMenuItem
-            // 
-            this.toSwitchToolStripMenuItem.Name = "toSwitchToolStripMenuItem";
-            this.toSwitchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.toSwitchToolStripMenuItem.Text = "To Switch";
-            this.toSwitchToolStripMenuItem.Click += new System.EventHandler(this.toSwitchToolStripMenuItem_Click);
             // 
             // tabControlMain
             // 
@@ -1962,6 +1965,13 @@
             this.columnHeader9.Text = "Name";
             this.columnHeader9.Width = 435;
             // 
+            // to3DSToolStripMenuItem
+            // 
+            this.to3DSToolStripMenuItem.Name = "to3DSToolStripMenuItem";
+            this.to3DSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.to3DSToolStripMenuItem.Text = "To 3DS";
+            this.to3DSToolStripMenuItem.Click += new System.EventHandler(this.to3DSToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2184,6 +2194,7 @@
         private System.Windows.Forms.ToolStripMenuItem importFromToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem convertToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toSwitchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem to3DSToolStripMenuItem;
     }
 }
 
