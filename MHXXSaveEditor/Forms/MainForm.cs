@@ -29,7 +29,7 @@ namespace MHXXSaveEditor
         string filePath;
         byte[] saveFile;
         byte[] saveFileRaw;
-        readonly int SWITCH_SAVE_SIZE = 4726152 + 36;
+        readonly int SWITCH_SAVE_SIZE = 4726152 + 432948; //edited to be MHGU filesize
         bool switchMode = false; //true is switch mode
         int currentPlayer, itemSelectedSlot;
         public int equipSelectedSlot, palicoEqpSelectedSlot;
