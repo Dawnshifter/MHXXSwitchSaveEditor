@@ -63,6 +63,7 @@
             this.exportToToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.convertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toSwitchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.to3DSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -182,7 +183,6 @@
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.to3DSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.generalTab.SuspendLayout();
@@ -238,7 +238,7 @@
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStripMain.Size = new System.Drawing.Size(549, 24);
+            this.menuStripMain.Size = new System.Drawing.Size(630, 24);
             this.menuStripMain.TabIndex = 0;
             this.menuStripMain.Text = "menuStripMain";
             // 
@@ -495,6 +495,13 @@
             this.toSwitchToolStripMenuItem.Text = "To Switch";
             this.toSwitchToolStripMenuItem.Click += new System.EventHandler(this.toSwitchToolStripMenuItem_Click);
             // 
+            // to3DSToolStripMenuItem
+            // 
+            this.to3DSToolStripMenuItem.Name = "to3DSToolStripMenuItem";
+            this.to3DSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.to3DSToolStripMenuItem.Text = "To 3DS";
+            this.to3DSToolStripMenuItem.Click += new System.EventHandler(this.to3DSToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -545,7 +552,7 @@
             this.tabControlMain.Margin = new System.Windows.Forms.Padding(2);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(530, 292);
+            this.tabControlMain.Size = new System.Drawing.Size(609, 292);
             this.tabControlMain.TabIndex = 1;
             // 
             // generalTab
@@ -1436,7 +1443,7 @@
             this.itemBoxTab.Margin = new System.Windows.Forms.Padding(2);
             this.itemBoxTab.Name = "itemBoxTab";
             this.itemBoxTab.Padding = new System.Windows.Forms.Padding(2);
-            this.itemBoxTab.Size = new System.Drawing.Size(522, 266);
+            this.itemBoxTab.Size = new System.Drawing.Size(601, 266);
             this.itemBoxTab.TabIndex = 4;
             this.itemBoxTab.Text = "Item Box";
             this.itemBoxTab.UseVisualStyleBackColor = true;
@@ -1452,17 +1459,17 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(514, 47);
+            this.groupBox1.Size = new System.Drawing.Size(591, 47);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Edit";
             // 
             // buttonClearItemSlot
             // 
-            this.buttonClearItemSlot.Location = new System.Drawing.Point(397, 15);
+            this.buttonClearItemSlot.Location = new System.Drawing.Point(378, 15);
             this.buttonClearItemSlot.Margin = new System.Windows.Forms.Padding(2);
             this.buttonClearItemSlot.Name = "buttonClearItemSlot";
-            this.buttonClearItemSlot.Size = new System.Drawing.Size(112, 24);
+            this.buttonClearItemSlot.Size = new System.Drawing.Size(67, 24);
             this.buttonClearItemSlot.TabIndex = 6;
             this.buttonClearItemSlot.Text = "Clear Slot";
             this.buttonClearItemSlot.UseVisualStyleBackColor = true;
@@ -1523,7 +1530,7 @@
             this.listViewItem.Location = new System.Drawing.Point(5, 6);
             this.listViewItem.MultiSelect = false;
             this.listViewItem.Name = "listViewItem";
-            this.listViewItem.Size = new System.Drawing.Size(515, 206);
+            this.listViewItem.Size = new System.Drawing.Size(591, 206);
             this.listViewItem.TabIndex = 2;
             this.listViewItem.UseCompatibleStateImageBehavior = false;
             this.listViewItem.View = System.Windows.Forms.View.Details;
@@ -1536,7 +1543,7 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "Item Name";
-            this.columnHeader2.Width = 497;
+            this.columnHeader2.Width = 172;
             // 
             // columnHeader3
             // 
@@ -1965,18 +1972,11 @@
             this.columnHeader9.Text = "Name";
             this.columnHeader9.Width = 435;
             // 
-            // to3DSToolStripMenuItem
-            // 
-            this.to3DSToolStripMenuItem.Name = "to3DSToolStripMenuItem";
-            this.to3DSToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.to3DSToolStripMenuItem.Text = "To 3DS";
-            this.to3DSToolStripMenuItem.Click += new System.EventHandler(this.to3DSToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(549, 327);
+            this.ClientSize = new System.Drawing.Size(630, 327);
             this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.menuStripMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

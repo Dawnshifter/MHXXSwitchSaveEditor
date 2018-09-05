@@ -30,6 +30,7 @@ namespace MHXXSaveEditor
         byte[] saveFile;
         byte[] saveFileRaw;
         readonly int SWITCH_SAVE_SIZE = 4726152 + 36;
+        readonly int MHGU_SAVE_SIZE = 4726152 + 432948;
         bool switchMode = false; //true is switch mode
         int currentPlayer, itemSelectedSlot;
         public int equipSelectedSlot, palicoEqpSelectedSlot;
@@ -72,7 +73,12 @@ namespace MHXXSaveEditor
             }
             else if (saveFileRaw.Length == SWITCH_SAVE_SIZE)
             {
-                MessageBox.Show($"Detected a Switch save", "Switch");
+                MessageBox.Show($"Detected a MHXX Switch save", "Switch");
+                switchMode = true;
+            }
+            else if (saveFileRaw.Length == MHGU_SAVE_SIZE)
+            {
+                MessageBox.Show($"Detected a MHGU Switch save", "Switch");
                 switchMode = true;
             }
             else
@@ -194,7 +200,7 @@ namespace MHXXSaveEditor
 
         private byte[] TransformToSwitchFormat()
         {
-            byte[] switchSaveFile = new byte[SWITCH_SAVE_SIZE];
+            byte[] switchSaveFile = new byte[MHGU_SAVE_SIZE];
             byte[] switchHeader = saveFileRaw.Take(36).ToArray();
             switchHeader.CopyTo(switchSaveFile, 0);
             saveFile.CopyTo(switchSaveFile, 36);
@@ -1502,6 +1508,75 @@ namespace MHXXSaveEditor
             switchMode = false;
             MessageBox.Show("You are now editing the 3DS version of this save.", "Coverted to 3DS");
 
+        }
+
+        private void mHXXToMHGUToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Please select the MHXX Switch save", "MHXX save");
+
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "All files (*.*)|*.*",
+                FilterIndex = 1
+            };
+
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                ofd.Dispose();
+                return;
+            }
+            Cursor.Current = Cursors.WaitCursor;
+            SplashScreen.ShowSplashScreen();
+            filePath = ofd.FileName;
+            Text = string.Format("{0} [{1}]", Constants.EDITOR_VERSION, ofd.SafeFileName); // Changes app title
+            byte[] mhxxFile = File.ReadAllBytes(ofd.FileName); // Read all bytes from file into memory buffer
+
+            ofd.Dispose();
+
+            if (mhxxFile.Length != SWITCH_SAVE_SIZE)
+            {
+                MessageBox.Show($"Not a valid switch save", "Error");
+                return;
+            }
+
+            MessageBox.Show("Please select the MHGU Switch save", "MHGU save");
+
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                ofd.Dispose();
+                return;
+            }
+            Cursor.Current = Cursors.WaitCursor;
+            SplashScreen.ShowSplashScreen();
+            filePath = ofd.FileName;
+            Text = string.Format("{0} [{1}]", Constants.EDITOR_VERSION, ofd.SafeFileName); // Changes app title
+            byte[] MHGU = File.ReadAllBytes(ofd.FileName); // Read all bytes from file into memory buffer
+
+            ofd.Dispose();
+
+            if (MHGU.Length != 5159100)
+            {
+                MessageBox.Show($"Not a valid switch save", "Error");
+                return;
+            }
+
+            var x = MHGU;
+            var z = mhxxFile;
+
+            for (int i = 0; i < mhxxFile.Length; i++)
+            {
+                MHGU[i] = mhxxFile[i];
+            }
+
+            File.WriteAllBytes(filePath, MHGU);
+            MessageBox.Show("File saved", "Saved !");
+
+            MessageBox.Show($"You are now editing the switch version of this save", "Conversion complete");
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            player.
         }
 
         private void ListViewPalicoEquipment_SelectedIndexChanged(object sender, EventArgs e)
