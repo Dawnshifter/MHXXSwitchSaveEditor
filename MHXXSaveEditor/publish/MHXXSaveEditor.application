@@ -8,7 +8,7 @@
   </compatibleFrameworks>
   <dependency>
     <dependentAssembly dependencyType="install" codebase="Application Files\MHXXSaveEditor_1_0_0_0\MHXXSaveEditor.exe.manifest" size="7535">
-      <assemblyIdentity name="MHXXSaveEditor.exe" version="1.0.0.0" publicKeyToken="ef8371c5e8c079c8" language="neutral" processorArchitecture="msil" type="win32" />
+      <assemblyIdentity name="MHGenUSaveEditor.exe" version="1.0.0.0" publicKeyToken="ef8371c5e8c079c8" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
