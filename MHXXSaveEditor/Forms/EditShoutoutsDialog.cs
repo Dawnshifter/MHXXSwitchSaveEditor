@@ -23,7 +23,7 @@ namespace MHXXSaveEditor.Forms
             string shoutOut;
             for (int a = 0; a < Constants.TOTAL_MANUAL_SHOUTOUTS; a++) // 24 manual shoutouts
             {
-                byte[] theShoutout = new byte[60];
+                byte[] theShoutout = new byte[104]; // updated from 60
                 Array.Copy(MainForm.player.ManualShoutouts, a * Constants.SIZEOF_PER_SHOUTOUT, theShoutout, 0, Constants.SIZEOF_PER_SHOUTOUT);
                 shoutOut = Encoding.UTF8.GetString(theShoutout);
 
@@ -43,7 +43,7 @@ namespace MHXXSaveEditor.Forms
             string shoutOut;
             for (int a = 0; a < Constants.TOTAL_AUTOMATIC_SHOUTOUTS; a++) // 24 manual shoutouts
             {
-                byte[] theShoutout = new byte[60];
+                byte[] theShoutout = new byte[104]; // updated from 60
                 Array.Copy(MainForm.player.AutomaticShoutouts, a * Constants.SIZEOF_PER_SHOUTOUT, theShoutout, 0, Constants.SIZEOF_PER_SHOUTOUT);
                 shoutOut = Encoding.UTF8.GetString(theShoutout);
 
@@ -66,7 +66,7 @@ namespace MHXXSaveEditor.Forms
             }
 
             var mlc = new MaxLengthChecker();
-            if (mlc.GetMaxLength(textBoxManualShoutouts.Text, 60))
+            if (mlc.GetMaxLength(textBoxManualShoutouts.Text, 104)) // updated from 60
                 textBoxManualShoutouts.MaxLength = textBoxManualShoutouts.Text.Length;
         }
 
@@ -79,7 +79,7 @@ namespace MHXXSaveEditor.Forms
             }
 
             var mlc = new MaxLengthChecker();
-            if (mlc.GetMaxLength(textBoxAutomaticShoutouts.Text, 60))
+            if (mlc.GetMaxLength(textBoxAutomaticShoutouts.Text, 104)) // updated from 60
                 textBoxAutomaticShoutouts.MaxLength = textBoxAutomaticShoutouts.Text.Length;
         }
 
@@ -118,7 +118,7 @@ namespace MHXXSaveEditor.Forms
         {
             int selectedShoutout = Convert.ToInt32(listViewManualShoutouts.SelectedItems[0].SubItems[0].Text) - 1;
 
-            byte[] toTransfer = new byte[60];
+            byte[] toTransfer = new byte[104]; // updated from 60
             byte[] theShoutout = Encoding.UTF8.GetBytes(textBoxManualShoutouts.Text);
             var startAt = toTransfer.Length - theShoutout.Length;
             Buffer.BlockCopy(theShoutout, 0, toTransfer, 0, theShoutout.Length);
@@ -131,7 +131,7 @@ namespace MHXXSaveEditor.Forms
         {
             int selectedShoutout = Convert.ToInt32(listViewAutomaticShoutouts.SelectedItems[0].SubItems[0].Text) - 1;
 
-            byte[] toTransfer = new byte[60];
+            byte[] toTransfer = new byte[104]; // updated from 60
             byte[] theShoutout = Encoding.UTF8.GetBytes(textBoxAutomaticShoutouts.Text);
             var startAt = toTransfer.Length - theShoutout.Length;
             Buffer.BlockCopy(theShoutout, 0, toTransfer, 0, theShoutout.Length);
