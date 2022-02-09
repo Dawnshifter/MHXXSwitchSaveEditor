@@ -739,7 +739,7 @@
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(138, 17);
             this.label19.TabIndex = 2;
-            this.label19.Text = "Best Time (seconds)";
+            this.label19.Text = "Best Time (frames)"; // this.label19.Text = "Best Time (seconds)"; The assumption here was false. its in frames (60 frames = 1 second, so the time conversion displayed in the editor is still correct, albeit MM:SS:MS instead of HH:MM:SS. Ironicly, the game runs in 30 FPS but tracks frames as if 60 FPS)
             // 
             // comboBoxArena
             // 
