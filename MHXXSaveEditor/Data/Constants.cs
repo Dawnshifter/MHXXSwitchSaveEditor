@@ -29,9 +29,9 @@
         public const int SIZEOF_GRUDGEMATCH = 20;
         public const int TOTAL_ARENA_ENTRY = 5;
 
-        public const int SIZEOF_PER_SHOUTOUT = 60;
-        public const int SIZEOF_MANUAL_SHOUTOUTS = 2880;
-        public const int SIZEOF_AUTOMATIC_SHOUTOUTS = 1620;
+        public const int SIZEOF_PER_SHOUTOUT = 104; // corrected shoutout size
+        public const int SIZEOF_MANUAL_SHOUTOUTS = 4992; // corrected total size
+        public const int SIZEOF_AUTOMATIC_SHOUTOUTS = 2808; // corrected total size
         public const int TOTAL_MANUAL_SHOUTOUTS = 48;
         public const int TOTAL_AUTOMATIC_SHOUTOUTS = 27;
 
