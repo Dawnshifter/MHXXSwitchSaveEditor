@@ -319,15 +319,15 @@ namespace MHXXSaveEditor.Forms
             MainForm.player.ArenaData[selectedIndex + selectedArena + 1] = timeByte[1];
 
             listViewArena.SelectedItems[0].SubItems[1].Text = ttime.GetTime((int)numericUpDownBestTime.Value).ToString();
-
-            if (numericUpDownBestTime.Value <= 18000)
-                comboBoxArenaGrade.SelectedIndex = 1;
-            else if (numericUpDownBestTime.Value <= 18000 * 2)
-                comboBoxArenaGrade.SelectedIndex = 2;
-            else if (numericUpDownBestTime.Value <= 18000 * 3)
-                comboBoxArenaGrade.SelectedIndex = 3;
-            else
-                comboBoxArenaGrade.SelectedIndex = 0;
+                // Turned off rank autoupdate due to several arena quests having 7 minute S rank times instead of the usual 5 minute times 
+            //if (numericUpDownBestTime.Value <= 18000)
+            //    comboBoxArenaGrade.SelectedIndex = 1;
+            //else if (numericUpDownBestTime.Value <= 18000 * 2)
+            //    comboBoxArenaGrade.SelectedIndex = 2;
+            //else if (numericUpDownBestTime.Value <= 18000 * 3)
+            //    comboBoxArenaGrade.SelectedIndex = 3;
+            //else
+            //    comboBoxArenaGrade.SelectedIndex = 0;
         }
 
         private void ComboBoxArenaWeapon_SelectedIndexChanged(object sender, EventArgs e)
