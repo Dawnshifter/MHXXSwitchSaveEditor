@@ -813,10 +813,11 @@ namespace MHXXSaveEditor.Forms
                 }
 
                 // Reset/Remove whatever equips the palico was using
-                thePalicoFile[0x100] = 1;
-                for (int a = 1; a < 6; a++)
+                thePalicoFile[0x100] = 0x01;
+                thePalicoFile[0x101] = 0x00; //no item is FFFF, not 0000. Fixed loop to reflect so.
+                for (int a = 1; a < 5; a++)
                 {
-                    thePalicoFile[0x100 + a] = 0;
+                    thePalicoFile[0x101 + a] = 0xFF;
                 }
 
                 Array.Copy(thePalicoFile, 0, mainForm.player.PalicoData, selectedPalico * Constants.SIZEOF_PALICO, Constants.SIZEOF_PALICO);
