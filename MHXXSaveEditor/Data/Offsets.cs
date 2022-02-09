@@ -12,7 +12,7 @@
 
         //Character Offsets [CHARACTER BASE +  CHARACTER OFFSET]
         public const int NAME_OFFSET = 0x23B7D; // size 4
-        public const int PLAY_TIME_OFFSET = 0x20; //Size 4m this only shows on the save screen
+        public const int PLAY_TIME_OFFSET = 0x20; //Size 4 - this only shows on the save screen
         public const int PLAY_TIME_OFFSET2 = 0x2248B; //Size 4
         public const int FUNDS_OFFSET = 0x24; //Size 4, this only shows on the save screen
         public const int FUNDS_OFFSET2 = 0x280F; // size 4
@@ -114,8 +114,8 @@
         public const int GUILDCARD_ARENA_LOG_OFFSET = 0xC83E1; //Size 324
 
         // Shoutouts
-        public const int MANUAL_SHOUTOUT_OFFSETS = 0x11D629; //Size 60
-        public const int AUTOMATIC_SHOUTOUT_OFFSETS = 0x11E169; //Size 60
+        public const int MANUAL_SHOUTOUT_OFFSETS = 0x11D629; //Size 104
+        public const int AUTOMATIC_SHOUTOUT_OFFSETS = 0x11E169; //Size 104
 
         //public const int SHOP_OFFSETS = 0x1D76;
         //public const int CRAFTABLE_WEAPONS_OFFSET = 0x20BE;
