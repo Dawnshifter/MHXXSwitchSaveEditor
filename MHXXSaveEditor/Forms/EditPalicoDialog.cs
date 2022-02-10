@@ -312,6 +312,39 @@ namespace MHXXSaveEditor.Forms
             }
         }
 
+        private void ComboBoxForte_SelectedIndexChanged(object sender, EventArgs e)
+        {
+                ComboBox cb = (ComboBox)sender;
+                if (!cb.Focused)
+                {
+                    return;
+                }
+
+            for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
+            {
+                if (a < 4 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out) to allow new build
+                {
+                    listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
+                }
+                else //deal with remaining slots outside the pattern
+                    listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]"; //null out slot
+            }
+            for (int a = 0; a < 12; a++) //rest skills to allow for new build
+            {
+                if (a < 4 + comboBoxSkillRNG.Text.Length) //reset pattern & learned slots
+                {
+                    listViewLearnedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
+                }
+                else //deal with remaining slots outside the pattern
+                    listViewLearnedSkills.Items[a].SubItems[1].Text = "NULL [96]"; //null out slot
+            }
+            for (int a = 0; a < 8; a++) //clear equipped actions/skills too
+            {
+                listViewEquippedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
+                listViewEquippedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
+            }
+        }
+
         private void ComboBoxEquippedActions_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewEquippedActions.SelectedItems.Count == 0) // Check if nothing was selected
@@ -422,7 +455,7 @@ namespace MHXXSaveEditor.Forms
             {
                 if (actionSelectedSlot == 0) //the main bias action
                 {
-                    switch (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]))
+                    switch (comboBoxForte.SelectedIndex)
                     {
                         case 0: //Charisma
                             break; //redundant with the Charisma specific stuff above
@@ -471,7 +504,7 @@ namespace MHXXSaveEditor.Forms
 				}
                 else if (actionSelectedSlot == 1)
                 {
-                    switch (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]))
+                    switch (comboBoxForte.SelectedIndex)
                     {
                         case 0: //Charisma
                             break; //redundant with the Charisma specific stuff above, so this removes it from the default case. Probably not necessary, but whatever.
@@ -583,7 +616,7 @@ namespace MHXXSaveEditor.Forms
 			{
 				if (skillSelectedSlot == 0) //first fixed slot
 				{
-					switch (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]))
+					switch (comboBoxForte.SelectedIndex)
 						{
 							case 0: //Charisma
 										comboBoxLearnedSkills.Items.Add("Slacker Slap");
@@ -625,7 +658,7 @@ namespace MHXXSaveEditor.Forms
 				}
 				else //second fixed slot
 				{
-					switch (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]))
+					switch (comboBoxForte.SelectedIndex)
 						{
 							case 0: //Charisma
 										comboBoxLearnedSkills.Items.Add("Last Stand");
@@ -840,151 +873,21 @@ namespace MHXXSaveEditor.Forms
             {
                 return;
             }
-				for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
+			for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
+			{
+				if (a < 4 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out)
 				{
-					if (a == 0) // set first slot to correct skill
-					{
-						switch (comboBoxForte.SelectedIndex)
-							{
-								case 0: //Charisma
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Palico Rally"; //corrects action
-									break; 
-								case 1: //Fighting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Furr-ious"; //corrects action
-									break;
-								case 2: //Protection
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Taunt"; //corrects action
-									break;
-								case 3: //Assisting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Poison Purr-ision"; //corrects action
-									break;
-								case 4: //Healing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "True Health Horn"; //corrects action
-									break;
-								case 5: //Bombing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mega Barrel Bombay"; //corrects action
-									break;
-								case 6: //Gathering
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Plunderang"; //corrects action
-									break;
-								case 7: //Beast
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Beast Mode"; //corrects action
-									break;
-								default: //Invalid Input
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
-									break;
-							}
-					}
-					else if (a == 1) // set second slot to correct skill
-					{
-						switch (comboBoxForte.SelectedIndex)
-							{
-								case 0: //Charisma
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
-									break; 
-								case 1: //Fighting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"; //corrects action
-									break;
-								case 2: //Protection
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"; //corrects action
-									break;
-								case 3: //Assisting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"; //corrects action
-									break;
-								case 4: //Healing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Armor Horn"; //corrects action
-									break;
-								case 5: //Bombing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Demon Horn"; //corrects action
-									break;
-								case 6: //Gathering
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"; //corrects action
-									break;
-								case 7: //Beast
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Rousing Roar"; //corrects action
-									break;
-								default: //Invalid Input
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
-									break;
-							}
-					}
-					else if (a == 2) // set third slot to correct skill
-					{
-						switch (comboBoxForte.SelectedIndex)
-							{
-								case 0: //Charisma
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
-									break; 
-								case 1: //Fighting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
-									break;
-								case 2: //Protection
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
-									break;
-								case 3: //Assisting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
-									break;
-								case 4: //Healing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
-									break;
-								case 5: //Bombing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
-									break;
-								case 6: //Gathering
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
-									break;
-								case 7: //Beast
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
-									break;
-								default: //Invalid Input
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
-									break;
-							}
-					}
-					else if (a == 3) // set fourth slot to correct skill (clear slot for Charisma)
-					{
-						switch (comboBoxForte.SelectedIndex)
-							{
-								case 0: //Charisma
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; //clears action
-									break; 
-								case 1: //Fighting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
-									break;
-								case 2: //Protection
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
-									break;
-								case 3: //Assisting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
-									break;
-								case 4: //Healing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
-									break;
-								case 5: //Bombing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
-									break;
-								case 6: //Gathering
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
-									break;
-								case 7: //Beast
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
-									break;
-								default: //Invalid Input
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
-									break;
-							}
-					}
-					else if (a < 4 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma extra learned slot handled above)
-					{
-						listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear slot
-					}
-					else //deal with remaining slots outside the pattern
-                        listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]"; //null out slot
+					listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
+				}
+				else //deal with remaining slots outside the pattern
+                       listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]"; //null out slot
+               }
+                for (int a = 0; a < 8; a++) //clear equipped actions too
+                {
+                    listViewEquippedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
                 }
-            
         }
-
-        private void ComboBoxSkillRNG_SelectedIndexChanged(object sender, EventArgs e)
+                private void ComboBoxSkillRNG_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
             if (!cb.Focused)
@@ -994,78 +897,16 @@ namespace MHXXSaveEditor.Forms
 			
 			    for (int a = 0; a < 12; a++) //edited to fix improper clearling/reset bug when changing skill RNG
 				{
-					if (a == 0) // set first slot to correct skill
+					if (a < 4 + comboBoxSkillRNG.Text.Length) //reset pattern & learned slots
 					{
-						switch (comboBoxForte.SelectedIndex)
-							{
-								case 0: //Charisma
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Slacker Slap"; //corrects skill
-									break; 
-								case 1: //Fighting
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Attack Up (S)"; //corrects skill
-									break;
-								case 2: //Protection
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Guard (S)"; //corrects skill
-									break;
-								case 3: //Assisting
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Monsterdar"; //corrects skill
-									break;
-								case 4: //Healing
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Defense Up (S)"; //corrects skill
-									break;
-								case 5: //Bombing
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Heat/Bomb Res"; //corrects skill
-									break;
-								case 6: //Gathering
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Gathering Pro"; //corrects skill
-									break;
-								case 7: //Beast
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Critical Boost"; //corrects skill
-									break;
-								default: //Invalid Input
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "-----";
-									break;
-							}
-					}
-					else if (a == 1) // set second slot to correct skill
-					{
-						switch (comboBoxForte.SelectedIndex)
-							{
-								case 0: //Charisma
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Last Stand"; //corrects skill
-									break; 
-								case 1: //Fighting
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Handicraft"; //corrects skill
-									break;
-								case 2: //Protection
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Guard Boost"; //corrects skill
-									break;
-								case 3: //Assisting
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Pro Trapper"; //corrects skill
-									break;
-								case 4: //Healing
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Horn Virtuoso"; //corrects skill
-									break;
-								case 5: //Bombing
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Bombay Boost"; //corrects skill
-									break;
-								case 6: //Gathering
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Pilfer Boost"; //corrects skill
-									break;
-								case 7: //Beast
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Recovery Up"; //corrects skill
-									break;
-								default: //Invalid Input
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "-----";
-									break;
-							}
-					}
-					else if (a < 4 + comboBoxSkillRNG.Text.Length) //reset pattern & learned slots
-					{
-						listViewLearnedSkills.Items[a].SubItems[1].Text = "-----"; // clear slot
-					}
+						listViewLearnedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
+                    }
 					else //deal with remaining slots outside the pattern
                         listViewLearnedSkills.Items[a].SubItems[1].Text = "NULL [96]"; //null out slot
+                }
+                for (int a = 0; a < 8; a++) //clear equipped skills too
+                {
+                    listViewEquippedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
                 }
 
         }
