@@ -849,32 +849,32 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Palico Rally"); //corrects action
-												break; 
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Palico Rally"); //corrects action
+									break; 
 								case 1: //Fighting
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Furr-ious"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Furr-ious"); //corrects action
+									break;
 								case 2: //Protection
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Taunt"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Taunt"); //corrects action
+									break;
 								case 3: //Assisting
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Poison Purr-ision"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Poison Purr-ision"); //corrects action
+									break;
 								case 4: //Healing
-												listViewLearnedActions.Items[a].SubItems[1].Text = "True Health Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "True Health Horn"); //corrects action
+									break;
 								case 5: //Bombing
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mega Barrel Bombay"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mega Barrel Bombay"); //corrects action
+									break;
 								case 6: //Gathering
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Plunderang"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Plunderang"); //corrects action
+									break;
 								case 7: //Beast
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Beast Mode"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Beast Mode"); //corrects action
+									break;
 								default: //Invalid Input
-												listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
+									break;
 							}
 					}
 					else if (a == 1) // set second slot to correct skill
@@ -882,32 +882,32 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
-												break; 
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									break; 
 								case 1: //Fighting
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"); //corrects action
+									break;
 								case 2: //Protection
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"); //corrects action
+									break;
 								case 3: //Assisting
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"); //corrects action
+									break;
 								case 4: //Healing
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Armor Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Armor Horn"); //corrects action
+									break;
 								case 5: //Bombing
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Demon Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Demon Horn"); //corrects action
+									break;
 								case 6: //Gathering
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"); //corrects action
+									break;
 								case 7: //Beast
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Rousing Roar"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Rousing Roar"); //corrects action
+									break;
 								default: //Invalid Input
-												listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
+									break;
 							}
 					}
 					else if (a == 2) // set third slot to correct skill
@@ -915,32 +915,32 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
-												break; 
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									break; 
 								case 1: //Fighting
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									break;
 								case 2: //Protection
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									break;
 								case 3: //Assisting
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									break;
 								case 4: //Healing
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									break;
 								case 5: //Bombing
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									break;
 								case 6: //Gathering
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									break;
 								case 7: //Beast
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									break;
 								default: //Invalid Input
-												listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
+									break;
 							}
 					}
 					else if (a == 3) // set fourth slot to correct skill (clear slot for Charisma)
@@ -948,32 +948,32 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-												listViewLearnedActions.Items[a].SubItems[1].Text = "-----"); //clears action
-												break; 
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----"); //clears action
+									break; 
 								case 1: //Fighting
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									break;
 								case 2: //Protection
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									break;
 								case 3: //Assisting
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									break;
 								case 4: //Healing
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									break;
 								case 5: //Bombing
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									break;
 								case 6: //Gathering
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									break;
 								case 7: //Beast
-												listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									break;
 								default: //Invalid Input
-												listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
-												break;
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
+									break;
 							}
 					}
 					else if (a < 4 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma extra learned slot handled above)
@@ -1001,32 +1001,32 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Slacker Slap"); //corrects skill
-												break; 
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Slacker Slap"); //corrects skill
+									break; 
 								case 1: //Fighting
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Attack Up (S)"); //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Attack Up (S)"); //corrects skill
+									break;
 								case 2: //Protection
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Guard (S)"); //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Guard (S)"); //corrects skill
+									break;
 								case 3: //Assisting
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Monsterdar"); //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Monsterdar"); //corrects skill
+									break;
 								case 4: //Healing
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Defense Up (S)"); //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Defense Up (S)"); //corrects skill
+									break;
 								case 5: //Bombing
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Heat/Bomb Res"); //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Heat/Bomb Res"); //corrects skill
+									break;
 								case 6: //Gathering
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Gathering Pro"); //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Gathering Pro"); //corrects skill
+									break;
 								case 7: //Beast
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Critical Boost"); //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Critical Boost"); //corrects skill
+									break;
 								default: //Invalid Input
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "-----");
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "-----");
+									break;
 							}
 					}
 					else if (a == 1) // set second slot to correct skill
@@ -1034,32 +1034,32 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Last Stand"; //corrects skill
-												break; 
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Last Stand"; //corrects skill
+									break; 
 								case 1: //Fighting
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Handicraft"; //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Handicraft"; //corrects skill
+									break;
 								case 2: //Protection
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Guard Boost"; //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Guard Boost"; //corrects skill
+									break;
 								case 3: //Assisting
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Pro Trapper"; //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Pro Trapper"; //corrects skill
+									break;
 								case 4: //Healing
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Horn Virtuoso"; //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Horn Virtuoso"; //corrects skill
+									break;
 								case 5: //Bombing
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Bombay Boost"; //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Bombay Boost"; //corrects skill
+									break;
 								case 6: //Gathering
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Pilfer Boost"; //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Pilfer Boost"; //corrects skill
+									break;
 								case 7: //Beast
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "Recovery Up"; //corrects skill
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Recovery Up"; //corrects skill
+									break;
 								default: //Invalid Input
-												listViewLearnedSkills.Items[a].SubItems[1].Text = "-----";
-												break;
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "-----";
+									break;
 							}
 					}
 					else if (a < 4 + comboBoxSkillRNG.Text.Length) //reset pattern & learned slots
