@@ -1577,7 +1577,7 @@ namespace MHXXSaveEditor
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            player.
+            // player. //this line appears to be broken when compiling commenting out. Unsure of use/purpose as it is not commneted
         }
 
         private void ListViewPalicoEquipment_SelectedIndexChanged(object sender, EventArgs e)
