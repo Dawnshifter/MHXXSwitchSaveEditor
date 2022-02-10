@@ -114,7 +114,7 @@
         public const int GUILDCARD_ARENA_LOG_OFFSET = 0xC83E1; //Size 324
 
         // Shoutouts
-        public const int MANUAL_SHOUTOUT_OFFSETS = 0x11D089// Size 104 - updated from 0x11D629
+        public const int MANUAL_SHOUTOUT_OFFSETS = 0x11D089;// Size 104 - updated from 0x11D629
         public const int AUTOMATIC_SHOUTOUT_OFFSETS = 0x11EDC9; //Size 104 - updated from 0x11E169
 
         //public const int SHOP_OFFSETS = 0x1D76;

@@ -381,7 +381,7 @@ namespace MHXXSaveEditor.Forms
             string actionRNG = comboBoxActionRNG.Text;
             int actionSelectedSlot = Convert.ToInt32(listViewLearnedActions.SelectedItems[0].SubItems[0].Text) - 1;
 
-            if(Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]) == 0) //specifically Charisma cat
+            if (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]) == 0) //specifically Charisma cat
             {
                 if (actionSelectedSlot >= 0 && actionSelectedSlot < 3) //the fixed slots for Charisma
 				    {
@@ -397,7 +397,7 @@ namespace MHXXSaveEditor.Forms
                 else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 3))
                     {
                         char RNG = comboBoxActionRNG.Text[actionSelectedSlot - 3];
-                        if(RNG == 'A')
+                        if (RNG == 'A')
                             comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves3);
                         else if (RNG == 'B')
                             comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves2);
@@ -406,7 +406,7 @@ namespace MHXXSaveEditor.Forms
 
                         comboBoxLearnedActions.Enabled = true;
                     }
-                else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 6 ) && actionSelectedSlot >= (comboBoxActionRNG.Text.Length + 3 )) //the 3 slots after the RNG pattern for Charisma cat
+                else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 6) && actionSelectedSlot >= (comboBoxActionRNG.Text.Length + 3)) //the 3 slots after the RNG pattern for Charisma cat
                     {
                         comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMovesT); //Implements taught move list.
                         comboBoxLearnedActions.Enabled = true; //changed to allow edits
@@ -420,49 +420,47 @@ namespace MHXXSaveEditor.Forms
             }
             else // all other cats
             {
-			    if (actionSelectedSlot == 0) //the main bias skill for cats
-				{
+                if (actionSelectedSlot == 0) //the main bias action
+                {
                     switch (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]))
                     {
                         case 0: //Charisma
-                        //    comboBoxEquippedActions.Items.Add("Palico Rally"); unnneded due with the Charisma specific stuff above
-                        //    comboBoxLearnedActions.Enabled = true; allows it to be changed if a incorrectly hex edited cat is imported
-                            break; //redundant with the Charisma specific stuff above, so this removes it from the default case. Probably not necessary, but whatever.
+                            break; //redundant with the Charisma specific stuff above
                         case 1: //Fighting
-                            comboBoxEquippedActions.Items.Add("Furr-ious");
+                            comboBoxLearnedActions.Items.Add("Furr-ious");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
                             break;
                         case 2: //Protection
-                            comboBoxEquippedActions.Items.Add("Taunt");
+                            comboBoxLearnedActions.Items.Add("Taunt");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
                             break;
                         case 3: //Assisting
-                            comboBoxEquippedActions.Items.Add("Poison Purr-ision");
+                            comboBoxLearnedActions.Items.Add("Poison Purr-ision");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
                             break;
                         case 4: //Healing
-                            comboBoxEquippedActions.Items.Add("True Health Horn");
+                            comboBoxLearnedActions.Items.Add("True Health Horn");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
                             break;
                         case 5: //Bombing
-                            comboBoxEquippedActions.Items.Add("Mega Barrel Bombay");
+                            comboBoxLearnedActions.Items.Add("Mega Barrel Bombay");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
                             break;
                         case 6: //Gathering
-                            comboBoxEquippedActions.Items.Add("Plunderang");
+                            comboBoxLearnedActions.Items.Add("Plunderang");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
                             break;
                         case 7: //Beast
-                            comboBoxEquippedActions.Items.Add("Beast Mode");
+                            comboBoxLearnedActions.Items.Add("Beast Mode");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
                             break;
                         default: //Invalid Input
-                            comboBoxEquippedActions.Items.Add("-----");
-                            comboBoxLearnedActions.Enabled = false;
+                            comboBoxLearnedActions.Items.Add("-----");
+                            comboBoxLearnedActions.Enabled = true;
                             break;
                     }
 				}
-                if (actionSelectedSlot == 2 || actionSelectedSlot == 3) //the fixed slots for all other cats. slot 0 moved to above coonditional
+                else if (actionSelectedSlot == 2 || actionSelectedSlot == 3) //the fixed slots for all other cats. slot 0 moved to above coonditional
 				{
 					if (actionSelectedSlot == 2)
 						comboBoxLearnedActions.Items.Add("Mini Barrel Bombay");
@@ -478,42 +476,42 @@ namespace MHXXSaveEditor.Forms
                         case 0: //Charisma
                             break; //redundant with the Charisma specific stuff above, so this removes it from the default case. Probably not necessary, but whatever.
                         case 1: //Fighting
-                            comboBoxEquippedActions.Items.Add("Demon Horn");
-                            comboBoxEquippedActions.Items.Add("Piercing Boomerangs");
+                            comboBoxLearnedActions.Items.Add("Demon Horn");
+                            comboBoxLearnedActions.Items.Add("Piercing Boomerangs");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
                             break;
                         case 2: //Protection
-                            comboBoxEquippedActions.Items.Add("Armor Horn");
-                            comboBoxEquippedActions.Items.Add("Emergency Retreat");
+                            comboBoxLearnedActions.Items.Add("Armor Horn");
+                            comboBoxLearnedActions.Items.Add("Emergency Retreat");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
                             break;
                         case 3: //Assisting
-                            comboBoxEquippedActions.Items.Add("Cheer Horn");
-                            comboBoxEquippedActions.Items.Add("Emergency Retreat");
+                            comboBoxLearnedActions.Items.Add("Cheer Horn");
+                            comboBoxLearnedActions.Items.Add("Emergency Retreat");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
                             break;
                         case 4: //Healing
-                            comboBoxEquippedActions.Items.Add("Armor Horn");
-                            comboBoxEquippedActions.Items.Add("Cheer Horn");
+                            comboBoxLearnedActions.Items.Add("Armor Horn");
+                            comboBoxLearnedActions.Items.Add("Cheer Horn");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
                             break;
                         case 5: //Bombing
-                            comboBoxEquippedActions.Items.Add("Demon Horn");
-                            comboBoxEquippedActions.Items.Add("Camoflage");
+                            comboBoxLearnedActions.Items.Add("Demon Horn");
+                            comboBoxLearnedActions.Items.Add("Camoflage");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
                             break;
                         case 6: //Gathering
-                            comboBoxEquippedActions.Items.Add("Piercing Boomerangs");
-                            comboBoxEquippedActions.Items.Add("Camoflage");
+                            comboBoxLearnedActions.Items.Add("Piercing Boomerangs");
+                            comboBoxLearnedActions.Items.Add("Camoflage");
 							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
                             break;
                         case 7: //Beast
-                            comboBoxEquippedActions.Items.Add("Rousing Roar");
+                            comboBoxLearnedActions.Items.Add("Rousing Roar");
 							comboBoxLearnedActions.Enabled = true; //Theres only 1 valid option for beast, but this allows them to be corrected manually if a incorrectly hex edited cat is imported
                             break;
                         default: //Invalid Input
-                            comboBoxEquippedActions.Items.Add("-----");
-                            comboBoxLearnedActions.Enabled = false;
+                            comboBoxLearnedActions.Items.Add("-----");
+                            comboBoxLearnedActions.Enabled = true;
                             break;
                     }
                 }
@@ -529,7 +527,7 @@ namespace MHXXSaveEditor.Forms
 
                     comboBoxLearnedActions.Enabled = true; //applies to all above cases
 			    }
-                else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 6 ) && actionSelectedSlot >= (comboBoxActionRNG.Text.Length + 4 )) //the 2 slots after the RNG pattern
+                else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 6) && actionSelectedSlot >= (comboBoxActionRNG.Text.Length + 4)) //the 2 slots after the RNG pattern
                 {
                     comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMovesT); //Implements taught move list.
                     comboBoxLearnedActions.Enabled = true; //changed to allow edits
@@ -588,39 +586,39 @@ namespace MHXXSaveEditor.Forms
 					switch (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]))
 						{
 							case 0: //Charisma
-										comboBoxEquippedSkills.Items.Add("Slacker Slap");
+										comboBoxLearnedSkills.Items.Add("Slacker Slap");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break; 
 							case 1: //Fighting
-										comboBoxEquippedSkills.Items.Add("Attack Up (S)");
+										comboBoxLearnedSkills.Items.Add("Attack Up (S)");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 2: //Protection
-										comboBoxEquippedSkills.Items.Add("Guard (S)");
+										comboBoxLearnedSkills.Items.Add("Guard (S)");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 3: //Assisting
-										comboBoxEquippedSkills.Items.Add("Monsterdar");
+										comboBoxLearnedSkills.Items.Add("Monsterdar");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 4: //Healing
-										comboBoxEquippedSkills.Items.Add("Defense Up (S)");
+										comboBoxLearnedSkills.Items.Add("Defense Up (S)");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 5: //Bombing
-										comboBoxEquippedSkills.Items.Add("Heat/Bomb Res");
+										comboBoxLearnedSkills.Items.Add("Heat/Bomb Res");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 6: //Gathering
-										comboBoxEquippedSkills.Items.Add("Gathering Pro");
+										comboBoxLearnedSkills.Items.Add("Gathering Pro");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 7: //Beast
-										comboBoxEquippedSkills.Items.Add("Critical Boost");
+										comboBoxLearnedSkills.Items.Add("Critical Boost");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							default: //Invalid Input
-										comboBoxEquippedSkills.Items.Add("-----");
+										comboBoxLearnedSkills.Items.Add("-----");
 										comboBoxLearnedSkills.Enabled = false;
 										break;
 						}
@@ -630,39 +628,39 @@ namespace MHXXSaveEditor.Forms
 					switch (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]))
 						{
 							case 0: //Charisma
-										comboBoxEquippedSkills.Items.Add("Last Stand");
+										comboBoxLearnedSkills.Items.Add("Last Stand");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break; 
 							case 1: //Fighting
-										comboBoxEquippedSkills.Items.Add("Handicraft");
+										comboBoxLearnedSkills.Items.Add("Handicraft");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 2: //Protection
-										comboBoxEquippedSkills.Items.Add("Guard Boost");
+										comboBoxLearnedSkills.Items.Add("Guard Boost");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 3: //Assisting
-										comboBoxEquippedSkills.Items.Add("Pro Trapper");
+										comboBoxLearnedSkills.Items.Add("Pro Trapper");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 4: //Healing
-										comboBoxEquippedSkills.Items.Add("Horn Virtuoso");
+										comboBoxLearnedSkills.Items.Add("Horn Virtuoso");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 5: //Bombing
-										comboBoxEquippedSkills.Items.Add("Bombay Boost");
+										comboBoxLearnedSkills.Items.Add("Bombay Boost");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 6: //Gathering
-										comboBoxEquippedSkills.Items.Add("Pilfer Boost");
+										comboBoxLearnedSkills.Items.Add("Pilfer Boost");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							case 7: //Beast
-										comboBoxEquippedSkills.Items.Add("Recovery Up");
+										comboBoxLearnedSkills.Items.Add("Recovery Up");
 										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
 										break;
 							default: //Invalid Input
-										comboBoxEquippedSkills.Items.Add("-----");
+										comboBoxLearnedSkills.Items.Add("-----");
 										comboBoxLearnedSkills.Enabled = false;
 										break;
 						}
@@ -849,31 +847,31 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Palico Rally"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Palico Rally"; //corrects action
 									break; 
 								case 1: //Fighting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Furr-ious"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Furr-ious"; //corrects action
 									break;
 								case 2: //Protection
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Taunt"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Taunt"; //corrects action
 									break;
 								case 3: //Assisting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Poison Purr-ision"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Poison Purr-ision"; //corrects action
 									break;
 								case 4: //Healing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "True Health Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "True Health Horn"; //corrects action
 									break;
 								case 5: //Bombing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mega Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mega Barrel Bombay"; //corrects action
 									break;
 								case 6: //Gathering
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Plunderang"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Plunderang"; //corrects action
 									break;
 								case 7: //Beast
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Beast Mode"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Beast Mode"; //corrects action
 									break;
 								default: //Invalid Input
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
 									break;
 							}
 					}
@@ -882,31 +880,31 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
 									break; 
 								case 1: //Fighting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"; //corrects action
 									break;
 								case 2: //Protection
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"; //corrects action
 									break;
 								case 3: //Assisting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Emergency Retreat"; //corrects action
 									break;
 								case 4: //Healing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Armor Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Armor Horn"; //corrects action
 									break;
 								case 5: //Bombing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Demon Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Demon Horn"; //corrects action
 									break;
 								case 6: //Gathering
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Piercing Boomerangs"; //corrects action
 									break;
 								case 7: //Beast
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Rousing Roar"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Rousing Roar"; //corrects action
 									break;
 								default: //Invalid Input
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
 									break;
 							}
 					}
@@ -915,31 +913,31 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
 									break; 
 								case 1: //Fighting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
 									break;
 								case 2: //Protection
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
 									break;
 								case 3: //Assisting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
 									break;
 								case 4: //Healing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
 									break;
 								case 5: //Bombing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
 									break;
 								case 6: //Gathering
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
 									break;
 								case 7: //Beast
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Mini Barrel Bombay"; //corrects action
 									break;
 								default: //Invalid Input
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
 									break;
 							}
 					}
@@ -948,31 +946,31 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----"); //clears action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; //clears action
 									break; 
 								case 1: //Fighting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
 									break;
 								case 2: //Protection
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
 									break;
 								case 3: //Assisting
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
 									break;
 								case 4: //Healing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
 									break;
 								case 5: //Bombing
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
 									break;
 								case 6: //Gathering
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
 									break;
 								case 7: //Beast
-									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"); //corrects action
+									listViewLearnedActions.Items[a].SubItems[1].Text = "Herb Horn"; //corrects action
 									break;
 								default: //Invalid Input
-									listViewLearnedActions.Items[a].SubItems[1].Text = "-----");
+									listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
 									break;
 							}
 					}
@@ -1001,31 +999,31 @@ namespace MHXXSaveEditor.Forms
 						switch (comboBoxForte.SelectedIndex)
 							{
 								case 0: //Charisma
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Slacker Slap"); //corrects skill
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Slacker Slap"; //corrects skill
 									break; 
 								case 1: //Fighting
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Attack Up (S)"); //corrects skill
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Attack Up (S)"; //corrects skill
 									break;
 								case 2: //Protection
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Guard (S)"); //corrects skill
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Guard (S)"; //corrects skill
 									break;
 								case 3: //Assisting
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Monsterdar"); //corrects skill
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Monsterdar"; //corrects skill
 									break;
 								case 4: //Healing
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Defense Up (S)"); //corrects skill
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Defense Up (S)"; //corrects skill
 									break;
 								case 5: //Bombing
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Heat/Bomb Res"); //corrects skill
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Heat/Bomb Res"; //corrects skill
 									break;
 								case 6: //Gathering
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Gathering Pro"); //corrects skill
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Gathering Pro"; //corrects skill
 									break;
 								case 7: //Beast
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "Critical Boost"); //corrects skill
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "Critical Boost"; //corrects skill
 									break;
 								default: //Invalid Input
-									listViewLearnedSkills.Items[a].SubItems[1].Text = "-----");
+									listViewLearnedSkills.Items[a].SubItems[1].Text = "-----";
 									break;
 							}
 					}
