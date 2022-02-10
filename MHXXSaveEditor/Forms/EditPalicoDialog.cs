@@ -1005,7 +1005,7 @@ namespace MHXXSaveEditor.Forms
                 }
 
                 // Reset/Remove whatever equips the palico was using
-                thePalicoFile[0x100] = 0x01;
+                thePalicoFile[0x100] = 0x00; //item 0x0001 is actually the second slot. corrected to first slot
                 thePalicoFile[0x101] = 0x00; //no item is FFFF, not 0000. Fixed loop to reflect so.
                 for (int a = 1; a < 5; a++)
                 {
