@@ -127,6 +127,15 @@ namespace MHXXSaveEditor.Forms
             int palicoJob = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe2]);
             int palicoProwler = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe3]);
 
+            if ( (palicoStatus & 0x80) == 0x80)
+            {
+                DLCCheckbox.Checked = true;
+            }
+            else
+            {
+                DLCCheckbox.Checked = false;
+            }
+
             if (palicoProwler == 1)
                 labelStatusDetail.Text = "This palico is selected for Prowler Mode";
             else
@@ -146,6 +155,12 @@ namespace MHXXSaveEditor.Forms
                         case 0:
                             labelStatusDetail.Text = "This palico is not hired; check with the Palico Sellers";
                             break;
+                        case 1:
+                            labelStatusDetail.Text = "This palico is selected as the First Palico for hunting";
+                            break;
+                        case 2:
+                            labelStatusDetail.Text = "This palico is selected as the Second Palico for hunting";
+                            break;
                         case 32:
                             labelStatusDetail.Text = "This palico is resting; not doing anything";
                             break;
@@ -157,6 +172,12 @@ namespace MHXXSaveEditor.Forms
                             break;
                         case 40:
                             labelStatusDetail.Text = "This palico is on a Meownster Hunt";
+                            break;
+                        case 129:
+                            labelStatusDetail.Text = "This DLC palico is selected as the First Palico for hunting";
+                            break;
+                        case 130:
+                            labelStatusDetail.Text = "This DLC palico is selected as the Second Palico for hunting";
                             break;
                         case 160:
                             labelStatusDetail.Text = "This DLC palico is resting; not doing anything";
@@ -774,6 +795,10 @@ namespace MHXXSaveEditor.Forms
                 mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x20 + ex] = expByte[ex];
             }
 
+            //DLC flag
+            int palicoStatus = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe0] & 0x7f);
+            mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe0] = Convert.ToByte(palicoStatus | (128 * Convert.ToInt16(DLCCheckbox.Checked)));
+
             mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x24] = (byte)(numericUpDownLevel.Value - 1);
             mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25] = (byte)comboBoxForte.SelectedIndex;
             mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x26] = (byte)numericUpDownEnthusiasm.Value;
@@ -1022,6 +1047,81 @@ namespace MHXXSaveEditor.Forms
             }
             else
                 return;
+        }
+
+        private void DLCCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            int palicoStatus = (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe0] & 0x7f) | (0x80 * Convert.ToInt16(DLCCheckbox.Checked)));
+            int palicoTraining = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe1]);
+            int palicoJob = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe2]);
+            int palicoProwler = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe3]);
+
+            if (palicoProwler == 1)
+                labelStatusDetail.Text = "This palico is selected for Prowler Mode";
+            else
+            {
+                if (palicoJob == 8)
+                    labelStatusDetail.Text = "This palico is selected for ordering items";
+                else if (palicoJob == 16)
+                    labelStatusDetail.Text = "This palico is selected for Palico Dojo/Catnap/Meditation";
+                else if (palicoTraining == 4)
+                    labelStatusDetail.Text = "Not sure what this palico is doing..";
+                else if (palicoTraining == 16)
+                    labelStatusDetail.Text = "This palico is selected for Normal Traning";
+                else if (palicoJob == 0 && palicoTraining == 0 || palicoTraining == 5 || palicoTraining == 21)
+                {
+                    switch (palicoStatus)
+                    {
+                        case 0:
+                            labelStatusDetail.Text = "This palico is not hired; check with the Palico Sellers";
+                            break;
+                        case 1:
+                            labelStatusDetail.Text = "This palico is selected as the First Palico for hunting";
+                            break;
+                        case 2:
+                            labelStatusDetail.Text = "This palico is selected as the Second Palico for hunting";
+                            break;
+                        case 32:
+                            labelStatusDetail.Text = "This palico is resting; not doing anything";
+                            break;
+                        case 33:
+                            labelStatusDetail.Text = "This palico is selected as the First Palico for hunting";
+                            break;
+                        case 34:
+                            labelStatusDetail.Text = "This palico is selected as the Second Palico for hunting";
+                            break;
+                        case 40:
+                            labelStatusDetail.Text = "This palico is on a Meownster Hunt";
+                            break;
+                        case 129:
+                            labelStatusDetail.Text = "This DLC palico is selected as the First Palico for hunting";
+                            break;
+                        case 130:
+                            labelStatusDetail.Text = "This DLC palico is selected as the Second Palico for hunting";
+                            break;
+                        case 160:
+                            labelStatusDetail.Text = "This DLC palico is resting; not doing anything";
+                            break;
+                        case 161:
+                            labelStatusDetail.Text = "This DLC palico is resting; not doing anything";
+                            break;
+                        case 162:
+                            labelStatusDetail.Text = "This DLC palico is selected as the First Palico for hunting";
+                            break;
+                        case 163:
+                            labelStatusDetail.Text = "This DLC palico is selected as the Second Palico for hunting";
+                            break;
+                        case 168:
+                            labelStatusDetail.Text = "This DLC palico is on a Meownster Hunt";
+                            break;
+                        default:
+                            labelStatusDetail.Text = "Not sure what this palico is doing [" + palicoStatus + "]";
+                            break;
+                    }
+                }
+                else
+                    labelStatusDetail.Text = "How did I get here.. PalicoJob: " + palicoJob + " PalicoTraining: " + palicoTraining + " PalicoStatus: " + palicoStatus;
+            }
         }
     }
 }

@@ -67,23 +67,23 @@ namespace MHXXSaveEditor
 
             if (saveFileRaw.Length == 4726152)
             {
-                MessageBox.Show($"Detected a 3DS save", "3DS");
+                SplashScreen.SaveType(1);
                 toSwitchToolStripMenuItem.Enabled = true;
                 switchMode = false;
             }
             else if (saveFileRaw.Length == SWITCH_SAVE_SIZE)
             {
-                MessageBox.Show($"Detected a MHXX Switch save", "Switch");
+                SplashScreen.SaveType(2);
                 switchMode = true;
             }
             else if (saveFileRaw.Length == MHGU_SAVE_SIZE)
             {
-                MessageBox.Show($"Detected a MHGU Switch save", "Switch");
+                SplashScreen.SaveType(3);
                 switchMode = true;
             }
             else
             {
-                MessageBox.Show($"Invalid save format", "Error");
+                SplashScreen.SaveType(4);
                 return;
             }
 
@@ -209,7 +209,7 @@ namespace MHXXSaveEditor
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Made by Dawnshifter based on work of Ukee for GBATemp\nBased off APM's MHX/MHGen Save Editor\nAlso thanks to Seth VanHeulen for the Save File structure\nAnd some MHX/MHGen/MHXX hex editing threads in GBATemp", "About");
+            MessageBox.Show("Made by Dawnshifter based on work of Ukee for GBATemp\nBased off APM's MHX/MHGen Save Editor\nAlso thanks to Seth VanHeulen for the Save File structure\nAnd some MHX/MHGen/MHXX hex editing threads in GBATemp\n\nFurther fixes/changes by iSharingan", "About");
         }
 
         public void LoadSave()
@@ -913,6 +913,8 @@ namespace MHXXSaveEditor
                 if (!i.SubItems[1].Text.Contains("-----"))
                 {
                     i.SubItems[2].Text = "99";
+                    int iteration = Convert.ToInt32(i.SubItems[0].Text) - 1;
+                    player.ItemCount[iteration] = i.SubItems[2].Text; //actually writes the changes. seriously. why was this missing?
                 }
             }
             MessageBox.Show("All item amount have been set to 99");
@@ -1118,6 +1120,8 @@ namespace MHXXSaveEditor
                         if (!i.SubItems[1].Text.Contains("-----"))
                         {
                             i.SubItems[2].Text = val.ToString();
+                            int iteration = Convert.ToInt32(i.SubItems[0].Text) - 1;
+                            player.ItemCount[iteration] = i.SubItems[2].Text; //actually writes the changes. seriously. why was this missing?
                         }
                     }
                 }
@@ -1141,6 +1145,13 @@ namespace MHXXSaveEditor
             {
                 listViewItem.Items[i].SubItems[1].Text = "-----";
                 listViewItem.Items[i].SubItems[2].Text = "0";
+            }
+            //actually writes the changes. why was this missing?
+            foreach (ListViewItem i in listViewItem.Items)
+            {
+                int iteration = Convert.ToInt32(i.SubItems[0].Text) - 1;
+                player.ItemId[iteration] = Array.IndexOf(GameConstants.ItemNameList, i.SubItems[1].Text).ToString();
+                player.ItemCount[iteration] = i.SubItems[2].Text;
             }
 
             MessageBox.Show("Duplicate items have been removed");
@@ -1169,9 +1180,9 @@ namespace MHXXSaveEditor
 
         private void VisitGithubPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you wish visit Github page?", "Visit Github", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+            if (MessageBox.Show("Do you wish visit the source Github for this version?", "Visit Github", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
             {
-                System.Diagnostics.Process.Start("https://github.com/mineminemine/MHXXSaveEditor");
+                System.Diagnostics.Process.Start("https://github.com/iSharingan/MHXXSaveEditor");
             }
         }
 
@@ -1190,11 +1201,6 @@ namespace MHXXSaveEditor
             if (savefile.ShowDialog() == DialogResult.OK)
                 File.WriteAllBytes(savefile.FileName, saveFile);
             MessageBox.Show("File saved", "Saved !");
-        }
-
-        private void SaveFile()
-        {
-
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)

@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.DlcFlagInfo = new System.Windows.Forms.Label();
+            this.DLCCheckbox = new System.Windows.Forms.CheckBox();
             this.comboBoxSkillRNG = new System.Windows.Forms.ComboBox();
             this.comboBoxActionRNG = new System.Windows.Forms.ComboBox();
             this.textBoxGreeting = new System.Windows.Forms.TextBox();
@@ -134,6 +136,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.DlcFlagInfo);
+            this.tabPage1.Controls.Add(this.DLCCheckbox);
             this.tabPage1.Controls.Add(this.comboBoxSkillRNG);
             this.tabPage1.Controls.Add(this.comboBoxActionRNG);
             this.tabPage1.Controls.Add(this.textBoxGreeting);
@@ -172,6 +176,32 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // DlcFlagInfo
+            // 
+            this.DlcFlagInfo.AutoSize = true;
+            this.DlcFlagInfo.Location = new System.Drawing.Point(342, 178);
+            this.DlcFlagInfo.Name = "DlcFlagInfo";
+            this.DlcFlagInfo.Size = new System.Drawing.Size(155, 26);
+            this.DlcFlagInfo.TabIndex = 35;
+            this.DlcFlagInfo.Text = "DLC cats replace their pattern\'s\r\nfirst B tier skill with a DCL skill\r\n";
+            this.DlcFlagInfo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // DLCCheckbox
+            // 
+            this.DLCCheckbox.AccessibleName = "";
+            this.DLCCheckbox.AutoSize = true;
+            this.DLCCheckbox.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.DLCCheckbox.Location = new System.Drawing.Point(344, 158);
+            this.DLCCheckbox.Name = "DLCCheckbox";
+            this.DLCCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.DLCCheckbox.Size = new System.Drawing.Size(88, 17);
+            this.DLCCheckbox.TabIndex = 34;
+            this.DLCCheckbox.Text = "DLC cat flag.";
+            this.DLCCheckbox.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.DLCCheckbox.UseMnemonic = false;
+            this.DLCCheckbox.UseVisualStyleBackColor = true;
+            this.DLCCheckbox.CheckedChanged += new System.EventHandler(this.DLCCheckbox_CheckedChanged);
             // 
             // comboBoxSkillRNG
             // 
@@ -1093,5 +1123,7 @@
         private System.Windows.Forms.ComboBox comboBoxActionRNG;
         private System.Windows.Forms.Button buttonExportPalico;
         private System.Windows.Forms.Button buttonImportPalico;
+        private System.Windows.Forms.CheckBox DLCCheckbox;
+        private System.Windows.Forms.Label DlcFlagInfo;
     }
 }
