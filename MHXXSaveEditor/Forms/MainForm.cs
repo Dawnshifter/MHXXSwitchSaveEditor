@@ -1300,7 +1300,7 @@ namespace MHXXSaveEditor
                 saveFile[6] = 0;
             }
 
-            Array.Copy(Properties.Resources.CleanSave, 0, saveFile, theOffset, Properties.Resources.CleanSave.Length);
+            Array.Copy(MHGenUSaveEditor.Properties.Resources.CleanSave, 0, saveFile, theOffset, MHGenUSaveEditor.Properties.Resources.CleanSave.Length);
             File.WriteAllBytes(filePath, saveFile);
             MessageBox.Show("The save slot has been deleted", "Save slot " + slotNumber +  "deleted");
             MessageBox.Show("This program will now restart");
