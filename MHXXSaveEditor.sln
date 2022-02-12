@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MHXXSaveEditor", "MHXXSaveEditor\MHXXSaveEditor.csproj", "{29ECF6B5-3945-45A5-9582-57EC30F9F8D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MHGenUSaveEditor", "MHXXSaveEditor\MHGenUSaveEditor.csproj", "{29ECF6B5-3945-45A5-9582-57EC30F9F8D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {031D66CC-1F79-400F-A0E5-34A0405DA462}
 	EndGlobalSection
 EndGlobal

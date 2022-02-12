@@ -98,25 +98,37 @@ namespace MHXXSaveEditor
             // To see which character slots are enabled
             if (saveFile[4] == 1) // First slot
             {
-                currentPlayer = 1;
+                if (currentPlayer != 2 && currentPlayer != 3) //added sanity check for loading a file after a file has been loaded
+                {
+                    currentPlayer = 1;
+                    toolStripMenuItemSaveSlot1.Checked = true;
+                    toolStripMenuItemSaveSlot2.Checked = false;
+                    toolStripMenuItemSaveSlot3.Checked = false;
+
+                }
                 toolStripMenuItemSaveSlot1.Enabled = true;
-                toolStripMenuItemSaveSlot1.Checked = true;
                 slot1ToolStripMenuItem.Enabled = true;
             }
             if (saveFile[5] == 1) // Second slot
             {
-                if (currentPlayer != 1)
+                if (currentPlayer != 1 && currentPlayer != 3) //added sanity check for loading a file after a file has been loaded
                 {
                     currentPlayer = 2;
+                    toolStripMenuItemSaveSlot1.Checked = false;
+                    toolStripMenuItemSaveSlot2.Checked = true;
+                    toolStripMenuItemSaveSlot3.Checked = false;
                 }
                 toolStripMenuItemSaveSlot2.Enabled = true;
                 slot2ToolStripMenuItem.Enabled = true;
             }
             if (saveFile[6] == 1) // Third slot
             {
-                if (currentPlayer != 1 && currentPlayer != 2)
+                if (currentPlayer != 1 && currentPlayer != 2) //added sanity check for loading a file after a file has been loaded
                 {
                     currentPlayer = 3;
+                    toolStripMenuItemSaveSlot1.Checked = false;
+                    toolStripMenuItemSaveSlot2.Checked = false;
+                    toolStripMenuItemSaveSlot3.Checked = true;
                 }
                 toolStripMenuItemSaveSlot3.Enabled = true;
                 slot3ToolStripMenuItem.Enabled = true;
@@ -195,15 +207,35 @@ namespace MHXXSaveEditor
                 saveFile = TransformToSwitchFormat();
             }
             File.WriteAllBytes(filePath, saveFile);
+            if (switchMode)
+            {
+                saveFile = saveFileRaw.Skip(36).ToArray(); //remove headder again
+            }
+            else
+            {
+                saveFile = saveFileRaw;
+            }
+            var ext = new DataExtractor();
+            ext.GetInfo(saveFile, currentPlayer, player); //unpack the save slot again to prevent corruptiopn on repeated saves
+            LoadSave();
             MessageBox.Show("File saved", "Saved !");
         }
 
         private byte[] TransformToSwitchFormat()
         {
-            byte[] switchSaveFile = new byte[MHGU_SAVE_SIZE];
-            byte[] switchHeader = saveFileRaw.Take(36).ToArray();
-            switchHeader.CopyTo(switchSaveFile, 0);
+            if (saveFile.Length == saveFileRaw.Length) //happens when user saved previously and the Switch headder is now appended back onto the save file
+            {
+                saveFile = saveFile.Skip(36).ToArray(); //correct the save size by removing the headder again
+            }
+            else if (saveFile.Length > saveFileRaw.Length)
+            {
+                MessageBox.Show("Trying to write " + saveFile.Length + " bytes of data\nto " + saveFileRaw.Length + " bytes of space\n\nExpect save operation to fail", "ERROR"); //something has gone horribly wrong
+            }
+            byte[] switchSaveFile = saveFileRaw; //corrected to support both MHGU and MHXX data lenghts. Previously overlooked MHXX when modified for MHGU. Adds header in the process
+            //byte[] switchHeader = saveFileRaw.Take(36).ToArray(); // no longer needed with changes above
+            //switchHeader.CopyTo(switchSaveFile, 0); //no longer needed with changes above
             saveFile.CopyTo(switchSaveFile, 36);
+            saveFileRaw = switchSaveFile; //In case any other functions try to extract from the raw save again, this makes it reflect the changes being saved to file
             return switchSaveFile;
         }
 
@@ -1199,8 +1231,21 @@ namespace MHXXSaveEditor
             }
 
             if (savefile.ShowDialog() == DialogResult.OK)
+            {
                 File.WriteAllBytes(savefile.FileName, saveFile);
-            MessageBox.Show("File saved", "Saved !");
+            }
+            if (switchMode)
+            {
+                saveFile = saveFileRaw.Skip(36).ToArray();
+            }
+            else
+            {
+                saveFile = saveFileRaw;
+            }
+            var ext = new DataExtractor();
+            ext.GetInfo(saveFile, currentPlayer, player); //unpack the save slot again to prevent corruptiopn on repeated saves
+            LoadSave();
+            MessageBox.Show("File saved as " + savefile.FileName, "Saved !");
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
