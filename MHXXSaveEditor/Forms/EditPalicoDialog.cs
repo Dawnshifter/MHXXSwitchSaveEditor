@@ -941,7 +941,7 @@ namespace MHXXSaveEditor.Forms
             }
             for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
             {
-                if (a < 4 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out)
+                if (a < 6 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out)
                 {
                     listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
                 }
