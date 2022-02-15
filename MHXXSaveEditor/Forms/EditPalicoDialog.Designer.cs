@@ -63,6 +63,10 @@
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.textBoxBodyArmorRGBA = new System.Windows.Forms.TextBox();
+            this.textBoxHeadArmorRGBA = new System.Windows.Forms.TextBox();
             this.textBoxVestRGBA = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.textBoxRightEyeRGBA = new System.Windows.Forms.TextBox();
@@ -107,6 +111,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonExportPalico = new System.Windows.Forms.Button();
             this.buttonImportPalico = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnthusiasm)).BeginInit();
@@ -515,6 +520,11 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label28);
+            this.tabPage2.Controls.Add(this.label27);
+            this.tabPage2.Controls.Add(this.label26);
+            this.tabPage2.Controls.Add(this.textBoxBodyArmorRGBA);
+            this.tabPage2.Controls.Add(this.textBoxHeadArmorRGBA);
             this.tabPage2.Controls.Add(this.textBoxVestRGBA);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.textBoxRightEyeRGBA);
@@ -544,6 +554,46 @@
             this.tabPage2.Text = "Design";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(344, 200);
+            this.label27.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(97, 13);
+            this.label27.TabIndex = 23;
+            this.label27.Text = "Armor RGBA Value";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(208, 200);
+            this.label26.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(103, 13);
+            this.label26.TabIndex = 22;
+            this.label26.Text = "Helmet RGBA Value";
+            // 
+            // textBoxBodyArmorRGBA
+            // 
+            this.textBoxBodyArmorRGBA.Location = new System.Drawing.Point(347, 216);
+            this.textBoxBodyArmorRGBA.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxBodyArmorRGBA.MaxLength = 8;
+            this.textBoxBodyArmorRGBA.Name = "textBoxBodyArmorRGBA";
+            this.textBoxBodyArmorRGBA.Size = new System.Drawing.Size(114, 20);
+            this.textBoxBodyArmorRGBA.TabIndex = 21;
+            this.textBoxBodyArmorRGBA.TextChanged += new System.EventHandler(this.textBoxBodyArmorRGBA_TextChanged);
+            // 
+            // textBoxHeadArmorRGBA
+            // 
+            this.textBoxHeadArmorRGBA.Location = new System.Drawing.Point(210, 216);
+            this.textBoxHeadArmorRGBA.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxHeadArmorRGBA.MaxLength = 8;
+            this.textBoxHeadArmorRGBA.Name = "textBoxHeadArmorRGBA";
+            this.textBoxHeadArmorRGBA.Size = new System.Drawing.Size(114, 20);
+            this.textBoxHeadArmorRGBA.TabIndex = 20;
+            this.textBoxHeadArmorRGBA.TextChanged += new System.EventHandler(this.textBoxHeadArmorRGBA_TextChanged);
+            // 
             // textBoxVestRGBA
             // 
             this.textBoxVestRGBA.Location = new System.Drawing.Point(77, 216);
@@ -552,6 +602,7 @@
             this.textBoxVestRGBA.Name = "textBoxVestRGBA";
             this.textBoxVestRGBA.Size = new System.Drawing.Size(114, 20);
             this.textBoxVestRGBA.TabIndex = 19;
+            this.textBoxVestRGBA.TextChanged += new System.EventHandler(this.textBoxVestRGBA_TextChanged);
             // 
             // label22
             // 
@@ -571,6 +622,7 @@
             this.textBoxRightEyeRGBA.Name = "textBoxRightEyeRGBA";
             this.textBoxRightEyeRGBA.Size = new System.Drawing.Size(114, 20);
             this.textBoxRightEyeRGBA.TabIndex = 17;
+            this.textBoxRightEyeRGBA.TextChanged += new System.EventHandler(this.textBoxRightEyeRGBA_TextChanged);
             // 
             // label21
             // 
@@ -590,6 +642,7 @@
             this.textBoxLeftEyeRGBA.Name = "textBoxLeftEyeRGBA";
             this.textBoxLeftEyeRGBA.Size = new System.Drawing.Size(114, 20);
             this.textBoxLeftEyeRGBA.TabIndex = 15;
+            this.textBoxLeftEyeRGBA.TextChanged += new System.EventHandler(this.textBoxLeftEyeRGBA_TextChanged);
             // 
             // label20
             // 
@@ -609,6 +662,7 @@
             this.textBoxCoatRGBA.Name = "textBoxCoatRGBA";
             this.textBoxCoatRGBA.Size = new System.Drawing.Size(114, 20);
             this.textBoxCoatRGBA.TabIndex = 13;
+            this.textBoxCoatRGBA.TextChanged += new System.EventHandler(this.textBoxCoatRGBA_TextChanged);
             // 
             // label19
             // 
@@ -1009,6 +1063,18 @@
             this.buttonImportPalico.UseVisualStyleBackColor = true;
             this.buttonImportPalico.Click += new System.EventHandler(this.ButtonImportPalico_Click);
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(228, 247);
+            this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(205, 39);
+            this.label28.TabIndex = 24;
+            this.label28.Text = "Note: Helmet/Armor color changes may\r\nnot be visible on certain armor pieces or\r\n" +
+    "if Rainbow/Deviant colors are set in-game";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // EditPalicoDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1125,5 +1191,10 @@
         private System.Windows.Forms.Button buttonImportPalico;
         private System.Windows.Forms.CheckBox DLCCheckbox;
         private System.Windows.Forms.Label DlcFlagInfo;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox textBoxBodyArmorRGBA;
+        private System.Windows.Forms.TextBox textBoxHeadArmorRGBA;
+        private System.Windows.Forms.Label label28;
     }
 }

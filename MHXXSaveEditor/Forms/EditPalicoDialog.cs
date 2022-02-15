@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Drawing;
 using System.Windows.Forms;
 using MHXXSaveEditor.Data;
 using MHXXSaveEditor.Util;
@@ -101,8 +102,8 @@ namespace MHXXSaveEditor.Forms
             textBoxGreeting.Text = palicoGreeting;
 
             // Design
-            byte[] palicoCoatRGBA, palicoRightEyeRGBA, palicoLeftEyeRGBA, palicoVestRGBA;
-            palicoCoatRGBA = palicoRightEyeRGBA = palicoLeftEyeRGBA = palicoVestRGBA = new byte[4];
+            byte[] palicoCoatRGBA, palicoRightEyeRGBA, palicoLeftEyeRGBA, palicoVestRGBA, palicoHeadArmorRGBA, palicoBodyArmorRGBA;
+            palicoCoatRGBA = palicoRightEyeRGBA = palicoLeftEyeRGBA = palicoVestRGBA = palicoHeadArmorRGBA = palicoBodyArmorRGBA = new byte[4];
 
             comboBoxVoice.SelectedIndex = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x10f]);
             comboBoxEyes.SelectedIndex = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x110]);
@@ -113,12 +114,16 @@ namespace MHXXSaveEditor.Forms
 
             Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x11A, palicoCoatRGBA, 0, 4);
             textBoxCoatRGBA.Text = BitConverter.ToString(palicoCoatRGBA).Replace("-", string.Empty);
-            Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x11e, palicoRightEyeRGBA, 0, 4);
+            Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x11E, palicoRightEyeRGBA, 0, 4);
             textBoxRightEyeRGBA.Text = BitConverter.ToString(palicoRightEyeRGBA).Replace("-", string.Empty);
             Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x122, palicoLeftEyeRGBA, 0, 4);
             textBoxLeftEyeRGBA.Text = BitConverter.ToString(palicoLeftEyeRGBA).Replace("-", string.Empty);
             Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x126, palicoVestRGBA, 0, 4);
             textBoxVestRGBA.Text = BitConverter.ToString(palicoVestRGBA).Replace("-", string.Empty);
+            Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x12A, palicoHeadArmorRGBA, 0, 4);
+            textBoxHeadArmorRGBA.Text = BitConverter.ToString(palicoHeadArmorRGBA).Replace("-", string.Empty);
+            Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x12E, palicoBodyArmorRGBA, 0, 4);
+            textBoxBodyArmorRGBA.Text = BitConverter.ToString(palicoBodyArmorRGBA).Replace("-", string.Empty);
 
             // Status
             // I have no idea what to name the variables for these tbh
@@ -885,6 +890,8 @@ namespace MHXXSaveEditor.Forms
                 mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x11e + k] = (byte)int.Parse(textBoxRightEyeRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
                 mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x122 + k] = (byte)int.Parse(textBoxLeftEyeRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
                 mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x126 + k] = (byte)int.Parse(textBoxVestRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
+                mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x12a + k] = (byte)int.Parse(textBoxHeadArmorRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
+                mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x12e + k] = (byte)int.Parse(textBoxBodyArmorRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
                 k++;
             }
 
@@ -1175,6 +1182,60 @@ namespace MHXXSaveEditor.Forms
                 else
                     labelStatusDetail.Text = "How did I get here.. PalicoJob: " + palicoJob + " PalicoTraining: " + palicoTraining + " PalicoStatus: " + palicoStatus;
             }
+        }
+
+        private void textBoxCoatRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            label19.BackColor = Color.FromArgb(int.Parse(textBoxCoatRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxCoatRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxCoatRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+            var cb = new ColorBrightness();
+            var foreColor = (cb.PerceivedBrightness(label19.BackColor) > 130 ? Color.Black : Color.White);
+            label19.ForeColor = foreColor;
+        }
+
+        private void textBoxLeftEyeRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            label20.BackColor = Color.FromArgb(int.Parse(textBoxLeftEyeRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxLeftEyeRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxLeftEyeRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+            var cb = new ColorBrightness();
+            var foreColor = (cb.PerceivedBrightness(label20.BackColor) > 130 ? Color.Black : Color.White);
+            label20.ForeColor = foreColor;
+        }
+
+        private void textBoxRightEyeRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            label21.BackColor = Color.FromArgb(int.Parse(textBoxRightEyeRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxRightEyeRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxRightEyeRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+            var cb = new ColorBrightness();
+            var foreColor = (cb.PerceivedBrightness(label21.BackColor) > 130 ? Color.Black : Color.White);
+            label21.ForeColor = foreColor;
+        }
+
+        private void textBoxVestRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            label22.BackColor = Color.FromArgb(int.Parse(textBoxVestRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxVestRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxVestRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+            var cb = new ColorBrightness();
+            var foreColor = (cb.PerceivedBrightness(label22.BackColor) > 130 ? Color.Black : Color.White);
+            label22.ForeColor = foreColor;
+        }
+
+        private void textBoxHeadArmorRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            label26.BackColor = Color.FromArgb(int.Parse(textBoxHeadArmorRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxHeadArmorRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxHeadArmorRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+            var cb = new ColorBrightness();
+            var foreColor = (cb.PerceivedBrightness(label26.BackColor) > 130 ? Color.Black : Color.White);
+            label26.ForeColor = foreColor;
+        }
+
+        private void textBoxBodyArmorRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            label27.BackColor = Color.FromArgb(int.Parse(textBoxBodyArmorRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBodyArmorRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBodyArmorRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+            var cb = new ColorBrightness();
+            var foreColor = (cb.PerceivedBrightness(label27.BackColor) > 130 ? Color.Black : Color.White);
+            label27.ForeColor = foreColor;
         }
     }
 }
