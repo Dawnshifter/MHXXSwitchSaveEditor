@@ -335,15 +335,34 @@ namespace MHXXSaveEditor.Forms
 
         private void ComboBoxForte_SelectedIndexChanged(object sender, EventArgs e)
         {
-                ComboBox cb = (ComboBox)sender;
-                if (!cb.Focused)
+            ComboBox cb = (ComboBox)sender;
+            if (!cb.Focused)
+            {
+                return;
+            }
+            int i;
+            i = comboBoxActionRNG.SelectedIndex; // store selected RNG type
+            comboBoxActionRNG.Items.Clear(); //remove action RNG validation
+            if (comboBoxForte.SelectedIndex == 0) // charisma bias
+            {
+                comboBoxActionRNG.Items.AddRange(GameConstants.PalicoCharismaActionRNGAbbv); //set Charisma validation
+                comboBoxActionRNG.SelectedIndex = i; //restore or convert RNG pattern
+            }
+            else // all other biases
+            {
+                comboBoxActionRNG.Items.AddRange(GameConstants.PalicoActionRNGAbbv); // use generic validation
+                if (i < 7) // if RNG pattern isn't the charisma-only option
                 {
-                    return;
+                    comboBoxActionRNG.SelectedIndex = i; //restore or convert RNG pattern
                 }
-
+                else
+                {
+                    comboBoxActionRNG.SelectedIndex = 6; // remove charisma-only option for non-charisma cats
+                }
+            }
             for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
             {
-                if (a < 4 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out) to allow new build
+                if (a < 6 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out) to allow new build
                 {
                     listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
                 }
@@ -364,6 +383,21 @@ namespace MHXXSaveEditor.Forms
                 listViewEquippedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
                 listViewEquippedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
             }
+            listViewLearnedActions.Items[0].SubItems[1].Text = GameConstants.PalicoForteA1[comboBoxForte.SelectedIndex]; //set forte action 1
+            listViewLearnedActions.Items[1].SubItems[1].Text = GameConstants.PalicoForteA2[comboBoxForte.SelectedIndex]; //set forte action 2
+            int n;
+            if (comboBoxForte.SelectedIndex == 0)
+            {
+                n = 1;
+            }
+            else
+            {
+                n = 2;
+            }
+            listViewLearnedActions.Items[n].SubItems[1].Text = "Mini Barrel Bombay"; // set fixed action 1
+            listViewLearnedActions.Items[n+1].SubItems[1].Text = "Herb Horn"; // set fixed action 2
+            listViewLearnedSkills.Items[0].SubItems[1].Text = GameConstants.PalicoForteS1[comboBoxForte.SelectedIndex]; //set forte skill 1
+            listViewLearnedSkills.Items[1].SubItems[1].Text = GameConstants.PalicoForteS2[comboBoxForte.SelectedIndex]; //set forte skill 2               
         }
 
         private void ComboBoxEquippedActions_SelectedIndexChanged(object sender, EventArgs e)
@@ -898,19 +932,37 @@ namespace MHXXSaveEditor.Forms
             {
                 return;
             }
-			for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
-			{
-				if (a < 4 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out)
-				{
-					listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
-				}
-				else //deal with remaining slots outside the pattern
-                       listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]"; //null out slot
-               }
-                for (int a = 0; a < 8; a++) //clear equipped actions too
+            for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
+            {
+                if (a < 4 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out)
                 {
-                    listViewEquippedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
+                    listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
                 }
+                else //deal with remaining slots outside the pattern
+                {
+                    listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]"; //null out slot
+                }
+            }
+            for (int a = 0; a < 8; a++) //clear equipped actions too
+            {
+                listViewEquippedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
+            }
+            listViewLearnedActions.Items[0].SubItems[1].Text = GameConstants.PalicoForteA1[comboBoxForte.SelectedIndex]; //set forte action 1
+            listViewLearnedActions.Items[1].SubItems[1].Text = GameConstants.PalicoForteA2[comboBoxForte.SelectedIndex]; //set forte action 2
+            int n;
+            if (comboBoxForte.SelectedIndex == 0)
+            {
+                n = 1;
+            }
+            else
+            {
+                n = 2;
+            }
+            listViewLearnedActions.Items[n].SubItems[1].Text = "Mini Barrel Bombay"; // set fixed action 1
+            listViewLearnedActions.Items[n + 1].SubItems[1].Text = "Herb Horn"; // set fixed action 2
+            listViewLearnedSkills.Items[0].SubItems[1].Text = GameConstants.PalicoForteS1[comboBoxForte.SelectedIndex]; //set forte skill 1
+            listViewLearnedSkills.Items[1].SubItems[1].Text = GameConstants.PalicoForteS2[comboBoxForte.SelectedIndex]; //set forte skill 2 
+
         }
                 private void ComboBoxSkillRNG_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -933,7 +985,8 @@ namespace MHXXSaveEditor.Forms
                 {
                     listViewEquippedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
                 }
-
+                listViewLearnedSkills.Items[0].SubItems[1].Text = GameConstants.PalicoForteS1[comboBoxForte.SelectedIndex]; //set forte skill 1
+                listViewLearnedSkills.Items[1].SubItems[1].Text = GameConstants.PalicoForteS2[comboBoxForte.SelectedIndex]; //set forte skill 2
         }
 
         private void TextBoxGreeting_TextChanged(object sender, EventArgs e)

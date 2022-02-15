@@ -298,7 +298,7 @@ namespace MHXXSaveEditor
             for (int a = 0; a < Constants.TOTAL_PALICO_SLOTS; a++)
             {
                 // if (Convert.ToInt32(player.PalicoData[a * Constants.SIZEOF_PALICO]) != 0) // Check if first character in name != 0, if != 0 means a palico exist in that block (or at least in my opinion) Edit note: this is false, the game accepts null named cats. Palico ID is a better check since it will never be 0 on hired cats
-                if (Convert.ToInt32(player.PalicoData[a * Constants.SIZEOF_PALICO + 95]) != 0) // Check if Palico ID is not 0. Since empty slots are 0 and hired cats are always >= 1, this should allow correction of null cat names (from imported cats)
+                if (Convert.ToInt32(player.PalicoData[a * Constants.SIZEOF_PALICO + 85]) != 0) // Check if Palico Action RNG is not 0. Since empty slots are 0 and hired cats are always >= 1, this should allow correction of null cat names (from imported cats)
                 {
                     byte[] palicoNameByte = new byte[32]; // reverted change. causes file load issues
                     string palicoName, palicoType;
