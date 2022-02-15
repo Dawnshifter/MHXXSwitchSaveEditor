@@ -249,6 +249,14 @@ namespace MHXXSaveEditor.Forms
             }
             listViewLearnedActions.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listViewLearnedActions.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            if (comboBoxForte.SelectedIndex == 0)
+            {
+                EAReminder.Text = "Must include " + listViewLearnedActions.Items[0].SubItems[1].Text + " above";
+            }
+            else
+            {
+                EAReminder.Text = "Must include " + listViewLearnedActions.Items[0].SubItems[1].Text + " and " + listViewLearnedActions.Items[1].SubItems[1].Text + " above";
+            }
         }
 
         public void LoadEquippedSkills()
@@ -402,7 +410,15 @@ namespace MHXXSaveEditor.Forms
             listViewLearnedActions.Items[n].SubItems[1].Text = "Mini Barrel Bombay"; // set fixed action 1
             listViewLearnedActions.Items[n+1].SubItems[1].Text = "Herb Horn"; // set fixed action 2
             listViewLearnedSkills.Items[0].SubItems[1].Text = GameConstants.PalicoForteS1[comboBoxForte.SelectedIndex]; //set forte skill 1
-            listViewLearnedSkills.Items[1].SubItems[1].Text = GameConstants.PalicoForteS2[comboBoxForte.SelectedIndex]; //set forte skill 2               
+            listViewLearnedSkills.Items[1].SubItems[1].Text = GameConstants.PalicoForteS2[comboBoxForte.SelectedIndex]; //set forte skill 2
+            if (comboBoxForte.SelectedIndex == 0)
+            {
+                EAReminder.Text = "Must include " + listViewLearnedActions.Items[0].SubItems[1].Text + " above";
+            }
+            else
+            {
+                EAReminder.Text = "Must include " + listViewLearnedActions.Items[0].SubItems[1].Text + " and " + listViewLearnedActions.Items[1].SubItems[1].Text + " above";
+            }
         }
 
         private void ComboBoxEquippedActions_SelectedIndexChanged(object sender, EventArgs e)

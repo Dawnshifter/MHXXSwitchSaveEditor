@@ -63,6 +63,7 @@
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.textBoxBodyArmorRGBA = new System.Windows.Forms.TextBox();
@@ -111,7 +112,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonExportPalico = new System.Windows.Forms.Button();
             this.buttonImportPalico = new System.Windows.Forms.Button();
-            this.label28 = new System.Windows.Forms.Label();
+            this.EAReminder = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnthusiasm)).BeginInit();
@@ -554,6 +555,18 @@
             this.tabPage2.Text = "Design";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(228, 247);
+            this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(205, 39);
+            this.label28.TabIndex = 24;
+            this.label28.Text = "Note: Helmet/Armor color changes may\r\nnot be visible on certain armor pieces or\r\n" +
+    "if Rainbow/Deviant colors are set in-game";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label27
             // 
             this.label27.AutoSize = true;
@@ -825,6 +838,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.EAReminder);
             this.tabPage3.Controls.Add(this.comboBoxEquippedActions);
             this.tabPage3.Controls.Add(this.listViewEquippedActions);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
@@ -1063,17 +1077,14 @@
             this.buttonImportPalico.UseVisualStyleBackColor = true;
             this.buttonImportPalico.Click += new System.EventHandler(this.ButtonImportPalico_Click);
             // 
-            // label28
+            // EAReminder
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(228, 247);
-            this.label28.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(205, 39);
-            this.label28.TabIndex = 24;
-            this.label28.Text = "Note: Helmet/Armor color changes may\r\nnot be visible on certain armor pieces or\r\n" +
-    "if Rainbow/Deviant colors are set in-game";
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.EAReminder.AutoSize = true;
+            this.EAReminder.Location = new System.Drawing.Point(195, 274);
+            this.EAReminder.Name = "EAReminder";
+            this.EAReminder.Size = new System.Drawing.Size(217, 13);
+            this.EAReminder.TabIndex = 5;
+            this.EAReminder.Text = "Must include [Action 1] and [Action 2] above";
             // 
             // EditPalicoDialog
             // 
@@ -1103,6 +1114,7 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
@@ -1196,5 +1208,6 @@
         private System.Windows.Forms.TextBox textBoxBodyArmorRGBA;
         private System.Windows.Forms.TextBox textBoxHeadArmorRGBA;
         private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label EAReminder;
     }
 }
