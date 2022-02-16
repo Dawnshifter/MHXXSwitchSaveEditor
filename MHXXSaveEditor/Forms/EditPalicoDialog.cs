@@ -1202,56 +1202,74 @@ namespace MHXXSaveEditor.Forms
 
         private void textBoxCoatRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
         {
-            label19.BackColor = Color.FromArgb(int.Parse(textBoxCoatRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxCoatRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxCoatRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+            if (textBoxCoatRGBA.Text.Length == 8)
+            {
+                label19.BackColor = Color.FromArgb(int.Parse(textBoxCoatRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxCoatRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxCoatRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
 
-            var cb = new ColorBrightness();
-            var foreColor = (cb.PerceivedBrightness(label19.BackColor) > 130 ? Color.Black : Color.White);
-            label19.ForeColor = foreColor;
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label19.BackColor) > 130 ? Color.Black : Color.White);
+                label19.ForeColor = foreColor;
+            }
         }
 
         private void textBoxLeftEyeRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
         {
-            label20.BackColor = Color.FromArgb(int.Parse(textBoxLeftEyeRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxLeftEyeRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxLeftEyeRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+            if (textBoxLeftEyeRGBA.Text.Length == 8)
+            {
+                label20.BackColor = Color.FromArgb(int.Parse(textBoxLeftEyeRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxLeftEyeRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxLeftEyeRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
 
-            var cb = new ColorBrightness();
-            var foreColor = (cb.PerceivedBrightness(label20.BackColor) > 130 ? Color.Black : Color.White);
-            label20.ForeColor = foreColor;
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label20.BackColor) > 130 ? Color.Black : Color.White);
+                label20.ForeColor = foreColor;
+            }
         }
 
         private void textBoxRightEyeRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
         {
-            label21.BackColor = Color.FromArgb(int.Parse(textBoxRightEyeRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxRightEyeRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxRightEyeRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+            if (textBoxRightEyeRGBA.Text.Length == 8)
+            {
+                label21.BackColor = Color.FromArgb(int.Parse(textBoxRightEyeRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxRightEyeRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxRightEyeRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
 
-            var cb = new ColorBrightness();
-            var foreColor = (cb.PerceivedBrightness(label21.BackColor) > 130 ? Color.Black : Color.White);
-            label21.ForeColor = foreColor;
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label21.BackColor) > 130 ? Color.Black : Color.White);
+                label21.ForeColor = foreColor;
+            }
         }
 
         private void textBoxVestRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
         {
-            label22.BackColor = Color.FromArgb(int.Parse(textBoxVestRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxVestRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxVestRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+            if (textBoxVestRGBA.Text.Length == 8)
+            {
+                label22.BackColor = Color.FromArgb(int.Parse(textBoxVestRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxVestRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxVestRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
 
-            var cb = new ColorBrightness();
-            var foreColor = (cb.PerceivedBrightness(label22.BackColor) > 130 ? Color.Black : Color.White);
-            label22.ForeColor = foreColor;
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label22.BackColor) > 130 ? Color.Black : Color.White);
+                label22.ForeColor = foreColor;
+            }
         }
 
         private void textBoxHeadArmorRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
         {
-            label26.BackColor = Color.FromArgb(int.Parse(textBoxHeadArmorRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxHeadArmorRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxHeadArmorRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+            if (textBoxHeadArmorRGBA.Text.Length == 8)
+            {
+                label26.BackColor = Color.FromArgb(int.Parse(textBoxHeadArmorRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxHeadArmorRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxHeadArmorRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
 
-            var cb = new ColorBrightness();
-            var foreColor = (cb.PerceivedBrightness(label26.BackColor) > 130 ? Color.Black : Color.White);
-            label26.ForeColor = foreColor;
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label26.BackColor) > 130 ? Color.Black : Color.White);
+                label26.ForeColor = foreColor;
+            }                
         }
 
         private void textBoxBodyArmorRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
         {
-            label27.BackColor = Color.FromArgb(int.Parse(textBoxBodyArmorRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBodyArmorRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBodyArmorRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+            if (textBoxBodyArmorRGBA.Text.Length == 8)
+            {
+                label27.BackColor = Color.FromArgb(int.Parse(textBoxBodyArmorRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBodyArmorRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBodyArmorRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
 
-            var cb = new ColorBrightness();
-            var foreColor = (cb.PerceivedBrightness(label27.BackColor) > 130 ? Color.Black : Color.White);
-            label27.ForeColor = foreColor;
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label27.BackColor) > 130 ? Color.Black : Color.White);
+                label27.ForeColor = foreColor;
+            }            
         }
     }
 }
