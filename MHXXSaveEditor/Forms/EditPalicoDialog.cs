@@ -218,6 +218,10 @@ namespace MHXXSaveEditor.Forms
             {
                 hexValue = mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x28 + a].ToString("X2");
                 intValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                if (intValue > 57 || intValue < 0) //if bad action ID
+                {
+                    intValue = 0; //remove bad action
+                }
                 actionName = GameConstants.PalicoSupportMoves[intValue];
 
                 string[] arr = new string[2];
@@ -239,6 +243,10 @@ namespace MHXXSaveEditor.Forms
             {
                 hexValue = mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x38 + a].ToString("X2");
                 intValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                if (intValue > 57 || intValue < 0) //if bad action ID
+                {
+                    intValue = 0; //remove bad action
+                }
                 actionName = GameConstants.PalicoSupportMoves[intValue];
 
                 string[] arr = new string[2];
@@ -268,6 +276,10 @@ namespace MHXXSaveEditor.Forms
             {
                 hexValue = mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x30 + a].ToString("X2");
                 intValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                if (intValue > 96 || intValue < 0) //if bad skill ID
+                {
+                    intValue = 0; //remove bad skill
+                }
                 skillName = GameConstants.PalicoSkills[intValue];
 
                 string[] arr = new string[2];
@@ -289,6 +301,10 @@ namespace MHXXSaveEditor.Forms
             {
                 hexValue = mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x48 + a].ToString("X2");
                 intValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                if (intValue > 96 || intValue < 0) //if bad skill ID
+                {
+                    intValue = 0; //remove bad skill
+                }
                 skillName = GameConstants.PalicoSkills[intValue];
 
                 string[] arr = new string[2];
