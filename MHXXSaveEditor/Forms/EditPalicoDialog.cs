@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Text;
+using System.Drawing;
 using System.Windows.Forms;
 using MHXXSaveEditor.Data;
 using MHXXSaveEditor.Util;
@@ -101,8 +102,8 @@ namespace MHXXSaveEditor.Forms
             textBoxGreeting.Text = palicoGreeting;
 
             // Design
-            byte[] palicoCoatRGBA, palicoRightEyeRGBA, palicoLeftEyeRGBA, palicoVestRGBA;
-            palicoCoatRGBA = palicoRightEyeRGBA = palicoLeftEyeRGBA = palicoVestRGBA = new byte[4];
+            byte[] palicoCoatRGBA, palicoRightEyeRGBA, palicoLeftEyeRGBA, palicoVestRGBA, palicoHeadArmorRGBA, palicoBodyArmorRGBA;
+            palicoCoatRGBA = palicoRightEyeRGBA = palicoLeftEyeRGBA = palicoVestRGBA = palicoHeadArmorRGBA = palicoBodyArmorRGBA = new byte[4];
 
             comboBoxVoice.SelectedIndex = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x10f]);
             comboBoxEyes.SelectedIndex = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x110]);
@@ -113,12 +114,16 @@ namespace MHXXSaveEditor.Forms
 
             Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x11A, palicoCoatRGBA, 0, 4);
             textBoxCoatRGBA.Text = BitConverter.ToString(palicoCoatRGBA).Replace("-", string.Empty);
-            Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x11e, palicoRightEyeRGBA, 0, 4);
+            Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x11E, palicoRightEyeRGBA, 0, 4);
             textBoxRightEyeRGBA.Text = BitConverter.ToString(palicoRightEyeRGBA).Replace("-", string.Empty);
             Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x122, palicoLeftEyeRGBA, 0, 4);
             textBoxLeftEyeRGBA.Text = BitConverter.ToString(palicoLeftEyeRGBA).Replace("-", string.Empty);
             Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x126, palicoVestRGBA, 0, 4);
             textBoxVestRGBA.Text = BitConverter.ToString(palicoVestRGBA).Replace("-", string.Empty);
+            Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x12A, palicoHeadArmorRGBA, 0, 4);
+            textBoxHeadArmorRGBA.Text = BitConverter.ToString(palicoHeadArmorRGBA).Replace("-", string.Empty);
+            Array.Copy(mainForm.player.PalicoData, (selectedPalico * Constants.SIZEOF_PALICO) + 0x12E, palicoBodyArmorRGBA, 0, 4);
+            textBoxBodyArmorRGBA.Text = BitConverter.ToString(palicoBodyArmorRGBA).Replace("-", string.Empty);
 
             // Status
             // I have no idea what to name the variables for these tbh
@@ -126,6 +131,15 @@ namespace MHXXSaveEditor.Forms
             int palicoTraining = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe1]);
             int palicoJob = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe2]);
             int palicoProwler = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe3]);
+
+            if ( (palicoStatus & 0x80) == 0x80)
+            {
+                DLCCheckbox.Checked = true;
+            }
+            else
+            {
+                DLCCheckbox.Checked = false;
+            }
 
             if (palicoProwler == 1)
                 labelStatusDetail.Text = "This palico is selected for Prowler Mode";
@@ -146,6 +160,12 @@ namespace MHXXSaveEditor.Forms
                         case 0:
                             labelStatusDetail.Text = "This palico is not hired; check with the Palico Sellers";
                             break;
+                        case 1:
+                            labelStatusDetail.Text = "This palico is selected as the First Palico for hunting";
+                            break;
+                        case 2:
+                            labelStatusDetail.Text = "This palico is selected as the Second Palico for hunting";
+                            break;
                         case 32:
                             labelStatusDetail.Text = "This palico is resting; not doing anything";
                             break;
@@ -157,6 +177,12 @@ namespace MHXXSaveEditor.Forms
                             break;
                         case 40:
                             labelStatusDetail.Text = "This palico is on a Meownster Hunt";
+                            break;
+                        case 129:
+                            labelStatusDetail.Text = "This DLC palico is selected as the First Palico for hunting";
+                            break;
+                        case 130:
+                            labelStatusDetail.Text = "This DLC palico is selected as the Second Palico for hunting";
                             break;
                         case 160:
                             labelStatusDetail.Text = "This DLC palico is resting; not doing anything";
@@ -192,6 +218,10 @@ namespace MHXXSaveEditor.Forms
             {
                 hexValue = mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x28 + a].ToString("X2");
                 intValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                if (intValue > 57 || intValue < 0) //if bad action ID
+                {
+                    intValue = 0; //remove bad action
+                }
                 actionName = GameConstants.PalicoSupportMoves[intValue];
 
                 string[] arr = new string[2];
@@ -213,6 +243,10 @@ namespace MHXXSaveEditor.Forms
             {
                 hexValue = mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x38 + a].ToString("X2");
                 intValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                if (intValue > 57 || intValue < 0) //if bad action ID
+                {
+                    intValue = 0; //remove bad action
+                }
                 actionName = GameConstants.PalicoSupportMoves[intValue];
 
                 string[] arr = new string[2];
@@ -223,6 +257,14 @@ namespace MHXXSaveEditor.Forms
             }
             listViewLearnedActions.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listViewLearnedActions.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            if (comboBoxForte.SelectedIndex == 0)
+            {
+                EAReminder.Text = "Must include " + listViewLearnedActions.Items[0].SubItems[1].Text + " above";
+            }
+            else
+            {
+                EAReminder.Text = "Must include " + listViewLearnedActions.Items[0].SubItems[1].Text + " and " + listViewLearnedActions.Items[1].SubItems[1].Text + " above";
+            }
         }
 
         public void LoadEquippedSkills()
@@ -234,6 +276,10 @@ namespace MHXXSaveEditor.Forms
             {
                 hexValue = mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x30 + a].ToString("X2");
                 intValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                if (intValue > 96 || intValue < 0) //if bad skill ID
+                {
+                    intValue = 0; //remove bad skill
+                }
                 skillName = GameConstants.PalicoSkills[intValue];
 
                 string[] arr = new string[2];
@@ -255,6 +301,10 @@ namespace MHXXSaveEditor.Forms
             {
                 hexValue = mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x48 + a].ToString("X2");
                 intValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+                if (intValue > 96 || intValue < 0) //if bad skill ID
+                {
+                    intValue = 0; //remove bad skill
+                }
                 skillName = GameConstants.PalicoSkills[intValue];
 
                 string[] arr = new string[2];
@@ -279,20 +329,20 @@ namespace MHXXSaveEditor.Forms
 
             comboBoxEquippedActions.Items.Clear();
 
-            if (actionSelectedSlot == 0)
-                comboBoxEquippedActions.Enabled = false;
-            else if (actionSelectedSlot == 1 && Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]) == 0)
-            {
-                comboBoxEquippedActions.Items.AddRange(GameConstants.PalicoSupportMoves);
-                comboBoxEquippedActions.Enabled = true;
-            }
-            else if (actionSelectedSlot == 1)
-                comboBoxEquippedActions.Enabled = false;
-            else
-            {
-                comboBoxEquippedActions.Items.AddRange(GameConstants.PalicoSupportMoves);
-                comboBoxEquippedActions.Enabled = true;
-            }
+            //if (actionSelectedSlot == 0) This check is unneeded
+            //     comboBoxEquippedActions.Enabled = false; This slot is NOT guaranteed to be a bias skill. Editing should be allowed.
+            //else if (actionSelectedSlot == 1 && Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]) == 0) condition is same as the one below.
+            //{
+            //    comboBoxEquippedActions.Items.AddRange(GameConstants.PalicoSupportMoves); Duplicate with below
+            //    comboBoxEquippedActions.Enabled = true; Duplicate with below
+            //}
+            // else if (actionSelectedSlot == 1) This slot is NOT guaranteed to be a bias skill. Editing should be allowed
+            //    comboBoxEquippedActions.Enabled = false; 
+            //else Every slot will be treated the same, so no coditionals needed.
+            //{
+            comboBoxEquippedActions.Items.AddRange(GameConstants.PalicoSupportMoves);
+            comboBoxEquippedActions.Enabled = true;
+            //}
             comboBoxEquippedActions.SelectedIndex = comboBoxEquippedActions.FindStringExact(listViewEquippedActions.SelectedItems[0].SubItems[1].Text);
         }
 
@@ -309,6 +359,81 @@ namespace MHXXSaveEditor.Forms
                 }
 
                 UpdateListViewEquippedActions();
+            }
+        }
+
+        private void ComboBoxForte_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            if (!cb.Focused)
+            {
+                return;
+            }
+            int i;
+            i = comboBoxActionRNG.SelectedIndex; // store selected RNG type
+            comboBoxActionRNG.Items.Clear(); //remove action RNG validation
+            if (comboBoxForte.SelectedIndex == 0) // charisma bias
+            {
+                comboBoxActionRNG.Items.AddRange(GameConstants.PalicoCharismaActionRNGAbbv); //set Charisma validation
+                comboBoxActionRNG.SelectedIndex = i; //restore or convert RNG pattern
+            }
+            else // all other biases
+            {
+                comboBoxActionRNG.Items.AddRange(GameConstants.PalicoActionRNGAbbv); // use generic validation
+                if (i < 7) // if RNG pattern isn't the charisma-only option
+                {
+                    comboBoxActionRNG.SelectedIndex = i; //restore or convert RNG pattern
+                }
+                else
+                {
+                    comboBoxActionRNG.SelectedIndex = 6; // remove charisma-only option for non-charisma cats
+                }
+            }
+            for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
+            {
+                if (a < 6 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out) to allow new build
+                {
+                    listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
+                }
+                else //deal with remaining slots outside the pattern
+                    listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]"; //null out slot
+            }
+            for (int a = 0; a < 12; a++) //rest skills to allow for new build
+            {
+                if (a < 4 + comboBoxSkillRNG.Text.Length) //reset pattern & learned slots
+                {
+                    listViewLearnedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
+                }
+                else //deal with remaining slots outside the pattern
+                    listViewLearnedSkills.Items[a].SubItems[1].Text = "NULL [96]"; //null out slot
+            }
+            for (int a = 0; a < 8; a++) //clear equipped actions/skills too
+            {
+                listViewEquippedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
+                listViewEquippedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
+            }
+            listViewLearnedActions.Items[0].SubItems[1].Text = GameConstants.PalicoForteA1[comboBoxForte.SelectedIndex]; //set forte action 1
+            listViewLearnedActions.Items[1].SubItems[1].Text = GameConstants.PalicoForteA2[comboBoxForte.SelectedIndex]; //set forte action 2
+            int n;
+            if (comboBoxForte.SelectedIndex == 0)
+            {
+                n = 1;
+            }
+            else
+            {
+                n = 2;
+            }
+            listViewLearnedActions.Items[n].SubItems[1].Text = "Mini Barrel Bombay"; // set fixed action 1
+            listViewLearnedActions.Items[n+1].SubItems[1].Text = "Herb Horn"; // set fixed action 2
+            listViewLearnedSkills.Items[0].SubItems[1].Text = GameConstants.PalicoForteS1[comboBoxForte.SelectedIndex]; //set forte skill 1
+            listViewLearnedSkills.Items[1].SubItems[1].Text = GameConstants.PalicoForteS2[comboBoxForte.SelectedIndex]; //set forte skill 2
+            if (comboBoxForte.SelectedIndex == 0)
+            {
+                EAReminder.Text = "Must include " + listViewLearnedActions.Items[0].SubItems[1].Text + " above";
+            }
+            else
+            {
+                EAReminder.Text = "Must include " + listViewLearnedActions.Items[0].SubItems[1].Text + " and " + listViewLearnedActions.Items[1].SubItems[1].Text + " above";
             }
         }
 
@@ -381,80 +506,22 @@ namespace MHXXSaveEditor.Forms
             string actionRNG = comboBoxActionRNG.Text;
             int actionSelectedSlot = Convert.ToInt32(listViewLearnedActions.SelectedItems[0].SubItems[0].Text) - 1;
 
-            if(Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]) == 0)
+            if (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]) == 0) //specifically Charisma cat
             {
-                if (actionSelectedSlot == 0 || actionSelectedSlot == 1 || actionSelectedSlot == 2)
-                    comboBoxLearnedActions.Enabled = false;
-                else
-                {
-                    if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 3))
+                if (actionSelectedSlot >= 0 && actionSelectedSlot < 3) //the fixed slots for Charisma
+				    {
+					    if (actionSelectedSlot == 0)
+						    comboBoxLearnedActions.Items.Add("Palico Rally");
+						else if (actionSelectedSlot == 1)
+						    comboBoxLearnedActions.Items.Add("Mini Barrel Bombay");
+						else
+						    comboBoxLearnedActions.Items.Add("Herb Horn");
+						
+                        comboBoxLearnedActions.Enabled = true; //Theres only 1 valid option each, but this allows them to be corrected manually if a incorrectly hex edited cat is imported
+					}
+                else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 3))
                     {
                         char RNG = comboBoxActionRNG.Text[actionSelectedSlot - 3];
-                        if(RNG == 'A')
-                            comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves3);
-                        else if (RNG == 'B')
-                            comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves2);
-                        else
-                            comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves1);
-
-                        comboBoxLearnedActions.Enabled = true;
-                    }
-                    else
-                    {
-                        comboBoxLearnedActions.Items.Add("-----");
-                        comboBoxLearnedActions.Enabled = false;
-                    }
-                }
-                comboBoxLearnedActions.SelectedIndex = comboBoxLearnedActions.FindStringExact(listViewLearnedActions.SelectedItems[0].SubItems[1].Text);
-            }
-            else
-            {
-                if (actionSelectedSlot == 0 || actionSelectedSlot == 2 || actionSelectedSlot == 3)
-                    comboBoxLearnedActions.Enabled = false;
-                else if (actionSelectedSlot == 1)
-                {
-                    switch (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25]))
-                    {
-                        case 0:
-                            comboBoxLearnedActions.Enabled = false;
-                            break;
-                        case 1:
-                            comboBoxEquippedActions.Items.Add("Demon Horn");
-                            comboBoxEquippedActions.Items.Add("Piercing Boomerangs");
-                            break;
-                        case 2:
-                            comboBoxEquippedActions.Items.Add("Armor Horn");
-                            comboBoxEquippedActions.Items.Add("Emergency Retreat");
-                            break;
-                        case 3:
-                            comboBoxEquippedActions.Items.Add("Cheer Horn");
-                            comboBoxEquippedActions.Items.Add("Emergency Retreat");
-                            break;
-                        case 4:
-                            comboBoxEquippedActions.Items.Add("Armor Horn");
-                            comboBoxEquippedActions.Items.Add("Cheer Horn");
-                            break;
-                        case 5:
-                            comboBoxEquippedActions.Items.Add("Demon Horn");
-                            comboBoxEquippedActions.Items.Add("Camouflage");
-                            break;
-                        case 6:
-                            comboBoxEquippedActions.Items.Add("Piercing Boomerangs");
-                            comboBoxEquippedActions.Items.Add("Camouflage");
-                            break;
-                        case 7:
-                            comboBoxEquippedActions.Items.Add("Power Roar");
-                            break;
-                        default:
-                            comboBoxEquippedActions.Items.Add("Something broke here lol");
-                            break;
-                    }
-                }
-                else
-                {
-                    if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 4))
-                    {
-                        char RNG = comboBoxActionRNG.Text[actionSelectedSlot - 4];
                         if (RNG == 'A')
                             comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves3);
                         else if (RNG == 'B')
@@ -464,11 +531,136 @@ namespace MHXXSaveEditor.Forms
 
                         comboBoxLearnedActions.Enabled = true;
                     }
-                    else
+                else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 6) && actionSelectedSlot >= (comboBoxActionRNG.Text.Length + 3)) //the 3 slots after the RNG pattern for Charisma cat
                     {
-                        comboBoxLearnedActions.Items.Add("-----");
-                        comboBoxLearnedActions.Enabled = false;
+                        comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMovesT); //Implements taught move list.
+                        comboBoxLearnedActions.Enabled = true; //changed to allow edits
                     }
+				else
+                    {
+                        comboBoxLearnedActions.Items.Add("NULL [57]"); //Remaining slots can only be null
+                        comboBoxLearnedActions.Enabled = true; //null slots should not be edited, but this allows them to be corrected manually if a incorrectly hex edited cat is imported
+                    }
+                comboBoxLearnedActions.SelectedIndex = comboBoxLearnedActions.FindStringExact(listViewLearnedActions.SelectedItems[0].SubItems[1].Text);
+            }
+            else // all other cats
+            {
+                if (actionSelectedSlot == 0) //the main bias action
+                {
+                    switch (comboBoxForte.SelectedIndex)
+                    {
+                        case 0: //Charisma
+                            break; //redundant with the Charisma specific stuff above
+                        case 1: //Fighting
+                            comboBoxLearnedActions.Items.Add("Furr-ious");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+                            break;
+                        case 2: //Protection
+                            comboBoxLearnedActions.Items.Add("Taunt");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+                            break;
+                        case 3: //Assisting
+                            comboBoxLearnedActions.Items.Add("Poison Purr-ision");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+                            break;
+                        case 4: //Healing
+                            comboBoxLearnedActions.Items.Add("True Health Horn");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+                            break;
+                        case 5: //Bombing
+                            comboBoxLearnedActions.Items.Add("Mega Barrel Bombay");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+                            break;
+                        case 6: //Gathering
+                            comboBoxLearnedActions.Items.Add("Plunderang");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+                            break;
+                        case 7: //Beast
+                            comboBoxLearnedActions.Items.Add("Beast Mode");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+                            break;
+                        default: //Invalid Input
+                            comboBoxLearnedActions.Items.Add("-----");
+                            comboBoxLearnedActions.Enabled = true;
+                            break;
+                    }
+				}
+                else if (actionSelectedSlot == 2 || actionSelectedSlot == 3) //the fixed slots for all other cats. slot 0 moved to above coonditional
+				{
+					if (actionSelectedSlot == 2)
+						comboBoxLearnedActions.Items.Add("Mini Barrel Bombay");
+					else
+						comboBoxLearnedActions.Items.Add("Herb Horn");
+					
+					comboBoxLearnedActions.Enabled = true; //Theres only 1 valid option each, but this allows them to be corrected manually if a incorrectly hex edited cat is imported
+				}
+                else if (actionSelectedSlot == 1)
+                {
+                    switch (comboBoxForte.SelectedIndex)
+                    {
+                        case 0: //Charisma
+                            break; //redundant with the Charisma specific stuff above, so this removes it from the default case. Probably not necessary, but whatever.
+                        case 1: //Fighting
+                            comboBoxLearnedActions.Items.Add("Demon Horn");
+                            comboBoxLearnedActions.Items.Add("Piercing Boomerangs");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
+                            break;
+                        case 2: //Protection
+                            comboBoxLearnedActions.Items.Add("Armor Horn");
+                            comboBoxLearnedActions.Items.Add("Emergency Retreat");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
+                            break;
+                        case 3: //Assisting
+                            comboBoxLearnedActions.Items.Add("Cheer Horn");
+                            comboBoxLearnedActions.Items.Add("Emergency Retreat");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
+                            break;
+                        case 4: //Healing
+                            comboBoxLearnedActions.Items.Add("Armor Horn");
+                            comboBoxLearnedActions.Items.Add("Cheer Horn");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
+                            break;
+                        case 5: //Bombing
+                            comboBoxLearnedActions.Items.Add("Demon Horn");
+                            comboBoxLearnedActions.Items.Add("Camoflage");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
+                            break;
+                        case 6: //Gathering
+                            comboBoxLearnedActions.Items.Add("Piercing Boomerangs");
+                            comboBoxLearnedActions.Items.Add("Camoflage");
+							comboBoxLearnedActions.Enabled = true; //allows it to be changed. missing in original code
+                            break;
+                        case 7: //Beast
+                            comboBoxLearnedActions.Items.Add("Rousing Roar");
+							comboBoxLearnedActions.Enabled = true; //Theres only 1 valid option for beast, but this allows them to be corrected manually if a incorrectly hex edited cat is imported
+                            break;
+                        default: //Invalid Input
+                            comboBoxLearnedActions.Items.Add("-----");
+                            comboBoxLearnedActions.Enabled = true;
+                            break;
+                    }
+                }
+                else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 4))
+                {
+                    char RNG = comboBoxActionRNG.Text[actionSelectedSlot - 4];
+                    if (RNG == 'A')
+                        comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves3);
+                    else if (RNG == 'B')
+                        comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves2);
+                    else
+                        comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMoves1);
+
+                    comboBoxLearnedActions.Enabled = true; //applies to all above cases
+			    }
+                else if (actionSelectedSlot < (comboBoxActionRNG.Text.Length + 6) && actionSelectedSlot >= (comboBoxActionRNG.Text.Length + 4)) //the 2 slots after the RNG pattern
+                {
+                    comboBoxLearnedActions.Items.AddRange(GameConstants.PalicoSupportMovesT); //Implements taught move list.
+                    comboBoxLearnedActions.Enabled = true; //changed to allow edits
+                }
+				else
+                {
+                    comboBoxLearnedActions.Items.Add("NULL [57]"); //Remaining slots can only be null
+                    comboBoxLearnedActions.Enabled = true; //null slots should not be edited, but this allows them to be corrected manually if a incorrectly hex edited cat is imported
                 }
                 comboBoxLearnedActions.SelectedIndex = comboBoxLearnedActions.FindStringExact(listViewLearnedActions.SelectedItems[0].SubItems[1].Text);
             }
@@ -512,8 +704,93 @@ namespace MHXXSaveEditor.Forms
 
             int skillSelectedSlot = Convert.ToInt32(listViewLearnedSkills.SelectedItems[0].SubItems[0].Text) - 1;
 
-            if (skillSelectedSlot == 0 || skillSelectedSlot == 1)
-                comboBoxLearnedSkills.Enabled = false;
+            if (skillSelectedSlot == 0 || skillSelectedSlot == 1) //this conditional should now update the fixed skills on cats when bias is changed - or at least allow them to be fixed manually
+			{
+				if (skillSelectedSlot == 0) //first fixed slot
+				{
+					switch (comboBoxForte.SelectedIndex)
+						{
+							case 0: //Charisma
+										comboBoxLearnedSkills.Items.Add("Slacker Slap");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break; 
+							case 1: //Fighting
+										comboBoxLearnedSkills.Items.Add("Attack Up (S)");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 2: //Protection
+										comboBoxLearnedSkills.Items.Add("Guard (S)");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 3: //Assisting
+										comboBoxLearnedSkills.Items.Add("Monsterdar");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 4: //Healing
+										comboBoxLearnedSkills.Items.Add("Defense Up (S)");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 5: //Bombing
+										comboBoxLearnedSkills.Items.Add("Heat/Bomb Res");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 6: //Gathering
+										comboBoxLearnedSkills.Items.Add("Gathering Pro");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 7: //Beast
+										comboBoxLearnedSkills.Items.Add("Critical Boost");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							default: //Invalid Input
+										comboBoxLearnedSkills.Items.Add("-----");
+										comboBoxLearnedSkills.Enabled = false;
+										break;
+						}
+				}
+				else //second fixed slot
+				{
+					switch (comboBoxForte.SelectedIndex)
+						{
+							case 0: //Charisma
+										comboBoxLearnedSkills.Items.Add("Last Stand");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break; 
+							case 1: //Fighting
+										comboBoxLearnedSkills.Items.Add("Handicraft");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 2: //Protection
+										comboBoxLearnedSkills.Items.Add("Guard Boost");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 3: //Assisting
+										comboBoxLearnedSkills.Items.Add("Pro Trapper");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 4: //Healing
+										comboBoxLearnedSkills.Items.Add("Horn Virtuoso");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 5: //Bombing
+										comboBoxLearnedSkills.Items.Add("Bombay Boost");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 6: //Gathering
+										comboBoxLearnedSkills.Items.Add("Pilfer Boost");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							case 7: //Beast
+										comboBoxLearnedSkills.Items.Add("Recovery Up");
+										comboBoxLearnedSkills.Enabled = true; //allows it to be changed if a incorrectly hex edited cat is imported
+										break;
+							default: //Invalid Input
+										comboBoxLearnedSkills.Items.Add("-----");
+										comboBoxLearnedSkills.Enabled = false;
+										break;
+						}
+				}
+			}
             else
             {
                 if (skillSelectedSlot < comboBoxSkillRNG.Text.Length + 2)
@@ -521,17 +798,22 @@ namespace MHXXSaveEditor.Forms
                     char RNG = comboBoxSkillRNG.Text[skillSelectedSlot - 2];
                     if (RNG == 'A')
                         comboBoxLearnedSkills.Items.AddRange(GameConstants.PalicoSkills3);
-                    else if (RNG == 'B')
+                    else if (RNG == 'B') // technichally includes DLC skills which are only valid in the learned slots or first B slot of a DLC flagged cat. Enforcing this behavior is not worth it, so it will stay as-is
                         comboBoxLearnedSkills.Items.AddRange(GameConstants.PalicoSkills2);
                     else
                         comboBoxLearnedSkills.Items.AddRange(GameConstants.PalicoSkills1);
 
                     comboBoxLearnedSkills.Enabled = true;
                 }
-                else
+				else if (skillSelectedSlot < comboBoxSkillRNG.Text.Length + 4 && skillSelectedSlot >= comboBoxSkillRNG.Text.Length + 2) // the two learned skill slots
                 {
-                    comboBoxLearnedSkills.Items.Add("-----");
-                    comboBoxLearnedSkills.Enabled = false;
+                    comboBoxLearnedSkills.Items.AddRange(GameConstants.PalicoSkills); //any skill can be learned, provided its not a duplicate, so theres no need for a special group
+                    comboBoxLearnedSkills.Enabled = true; //changed to allow edits
+                }
+				else
+                {
+                    comboBoxLearnedSkills.Items.Add("NULL [96]"); //Remaining slots can only be null
+                    comboBoxLearnedSkills.Enabled = true; //null slots should not be edited, but this allows them to be corrected manually if a incorrectly hex edited cat is imported
                 }
             }
 
@@ -583,6 +865,10 @@ namespace MHXXSaveEditor.Forms
             {
                 mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x20 + ex] = expByte[ex];
             }
+
+            //DLC flag
+            int palicoStatus = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe0] & 0x7f);
+            mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe0] = Convert.ToByte(palicoStatus | (128 * Convert.ToInt16(DLCCheckbox.Checked)));
 
             mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x24] = (byte)(numericUpDownLevel.Value - 1);
             mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x25] = (byte)comboBoxForte.SelectedIndex;
@@ -636,6 +922,8 @@ namespace MHXXSaveEditor.Forms
                 mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x11e + k] = (byte)int.Parse(textBoxRightEyeRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
                 mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x122 + k] = (byte)int.Parse(textBoxLeftEyeRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
                 mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x126 + k] = (byte)int.Parse(textBoxVestRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
+                mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x12a + k] = (byte)int.Parse(textBoxHeadArmorRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
+                mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0x12e + k] = (byte)int.Parse(textBoxBodyArmorRGBA.Text.Substring(a, 2), System.Globalization.NumberStyles.HexNumber);
                 k++;
             }
 
@@ -683,40 +971,61 @@ namespace MHXXSaveEditor.Forms
             {
                 return;
             }
-
-            if(comboBoxForte.SelectedIndex == 0)
+            for (int a = 0; a < 16; a++) //edited to fix improper clearling/reset bug when changing action RNG
             {
-                for (int a = 3; a < 3 + comboBoxActionRNG.Text.Length; a++)
-                    listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
-                for (int a = 3 + comboBoxActionRNG.Text.Length; a < 6 + comboBoxActionRNG.Text.Length; a++)
-                    listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
-                for (int a = 5 + comboBoxActionRNG.Text.Length; a < 16; a++)
-                    listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]";
+                if (a < 6 + comboBoxActionRNG.Text.Length) //reset pattern & learned slots (charisma pattern is differences cancel out)
+                {
+                    listViewLearnedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
+                }
+                else //deal with remaining slots outside the pattern
+                {
+                    listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]"; //null out slot
+                }
+            }
+            for (int a = 0; a < 8; a++) //clear equipped actions too
+            {
+                listViewEquippedActions.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
+            }
+            listViewLearnedActions.Items[0].SubItems[1].Text = GameConstants.PalicoForteA1[comboBoxForte.SelectedIndex]; //set forte action 1
+            listViewLearnedActions.Items[1].SubItems[1].Text = GameConstants.PalicoForteA2[comboBoxForte.SelectedIndex]; //set forte action 2
+            int n;
+            if (comboBoxForte.SelectedIndex == 0)
+            {
+                n = 1;
             }
             else
             {
-                for (int a = 4; a < 4 + comboBoxActionRNG.Text.Length; a++)
-                        listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
-                for (int a = 4 + comboBoxActionRNG.Text.Length; a < 7 + comboBoxActionRNG.Text.Length; a++)
-                    listViewLearnedActions.Items[a].SubItems[1].Text = "-----";
-                for (int a = 6 + comboBoxActionRNG.Text.Length; a < 16; a++)
-                    listViewLearnedActions.Items[a].SubItems[1].Text = "NULL [57]";
+                n = 2;
             }
-        }
+            listViewLearnedActions.Items[n].SubItems[1].Text = "Mini Barrel Bombay"; // set fixed action 1
+            listViewLearnedActions.Items[n + 1].SubItems[1].Text = "Herb Horn"; // set fixed action 2
+            listViewLearnedSkills.Items[0].SubItems[1].Text = GameConstants.PalicoForteS1[comboBoxForte.SelectedIndex]; //set forte skill 1
+            listViewLearnedSkills.Items[1].SubItems[1].Text = GameConstants.PalicoForteS2[comboBoxForte.SelectedIndex]; //set forte skill 2 
 
-        private void ComboBoxSkillRNG_SelectedIndexChanged(object sender, EventArgs e)
+        }
+                private void ComboBoxSkillRNG_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
             if (!cb.Focused)
             {
                 return;
             }
-            for (int a = 2; a < 8; a++)
-            {
-                if (listViewLearnedSkills.Items[a].SubItems[1].Text != "-----" || !listViewLearnedSkills.Items[a].SubItems[1].Text.Contains("NULL"))
-                    listViewLearnedSkills.Items[a].SubItems[1].Text = "-----";
-            }
-
+			
+			    for (int a = 0; a < 12; a++) //edited to fix improper clearling/reset bug when changing skill RNG
+				{
+					if (a < 4 + comboBoxSkillRNG.Text.Length) //reset pattern & learned slots
+					{
+						listViewLearnedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. User can manually re-add the correct ones
+                    }
+					else //deal with remaining slots outside the pattern
+                        listViewLearnedSkills.Items[a].SubItems[1].Text = "NULL [96]"; //null out slot
+                }
+                for (int a = 0; a < 8; a++) //clear equipped skills too
+                {
+                    listViewEquippedSkills.Items[a].SubItems[1].Text = "-----"; // clear all slots. Users can manually re-add what they want
+                }
+                listViewLearnedSkills.Items[0].SubItems[1].Text = GameConstants.PalicoForteS1[comboBoxForte.SelectedIndex]; //set forte skill 1
+                listViewLearnedSkills.Items[1].SubItems[1].Text = GameConstants.PalicoForteS2[comboBoxForte.SelectedIndex]; //set forte skill 2
         }
 
         private void TextBoxGreeting_TextChanged(object sender, EventArgs e)
@@ -813,10 +1122,11 @@ namespace MHXXSaveEditor.Forms
                 }
 
                 // Reset/Remove whatever equips the palico was using
-                thePalicoFile[0x100] = 1;
-                for (int a = 1; a < 6; a++)
+                thePalicoFile[0x100] = 0x00; //item 0x0001 is actually the second slot. corrected to first slot
+                thePalicoFile[0x101] = 0x00; //no item is FFFF, not 0000. Fixed loop to reflect so.
+                for (int a = 1; a < 5; a++)
                 {
-                    thePalicoFile[0x100 + a] = 0;
+                    thePalicoFile[0x101 + a] = 0xFF;
                 }
 
                 Array.Copy(thePalicoFile, 0, mainForm.player.PalicoData, selectedPalico * Constants.SIZEOF_PALICO, Constants.SIZEOF_PALICO);
@@ -829,6 +1139,153 @@ namespace MHXXSaveEditor.Forms
             }
             else
                 return;
+        }
+
+        private void DLCCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            int palicoStatus = (Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe0] & 0x7f) | (0x80 * Convert.ToInt16(DLCCheckbox.Checked)));
+            int palicoTraining = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe1]);
+            int palicoJob = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe2]);
+            int palicoProwler = Convert.ToInt32(mainForm.player.PalicoData[(selectedPalico * Constants.SIZEOF_PALICO) + 0xe3]);
+
+            if (palicoProwler == 1)
+                labelStatusDetail.Text = "This palico is selected for Prowler Mode";
+            else
+            {
+                if (palicoJob == 8)
+                    labelStatusDetail.Text = "This palico is selected for ordering items";
+                else if (palicoJob == 16)
+                    labelStatusDetail.Text = "This palico is selected for Palico Dojo/Catnap/Meditation";
+                else if (palicoTraining == 4)
+                    labelStatusDetail.Text = "Not sure what this palico is doing..";
+                else if (palicoTraining == 16)
+                    labelStatusDetail.Text = "This palico is selected for Normal Traning";
+                else if (palicoJob == 0 && palicoTraining == 0 || palicoTraining == 5 || palicoTraining == 21)
+                {
+                    switch (palicoStatus)
+                    {
+                        case 0:
+                            labelStatusDetail.Text = "This palico is not hired; check with the Palico Sellers";
+                            break;
+                        case 1:
+                            labelStatusDetail.Text = "This palico is selected as the First Palico for hunting";
+                            break;
+                        case 2:
+                            labelStatusDetail.Text = "This palico is selected as the Second Palico for hunting";
+                            break;
+                        case 32:
+                            labelStatusDetail.Text = "This palico is resting; not doing anything";
+                            break;
+                        case 33:
+                            labelStatusDetail.Text = "This palico is selected as the First Palico for hunting";
+                            break;
+                        case 34:
+                            labelStatusDetail.Text = "This palico is selected as the Second Palico for hunting";
+                            break;
+                        case 40:
+                            labelStatusDetail.Text = "This palico is on a Meownster Hunt";
+                            break;
+                        case 129:
+                            labelStatusDetail.Text = "This DLC palico is selected as the First Palico for hunting";
+                            break;
+                        case 130:
+                            labelStatusDetail.Text = "This DLC palico is selected as the Second Palico for hunting";
+                            break;
+                        case 160:
+                            labelStatusDetail.Text = "This DLC palico is resting; not doing anything";
+                            break;
+                        case 161:
+                            labelStatusDetail.Text = "This DLC palico is resting; not doing anything";
+                            break;
+                        case 162:
+                            labelStatusDetail.Text = "This DLC palico is selected as the First Palico for hunting";
+                            break;
+                        case 163:
+                            labelStatusDetail.Text = "This DLC palico is selected as the Second Palico for hunting";
+                            break;
+                        case 168:
+                            labelStatusDetail.Text = "This DLC palico is on a Meownster Hunt";
+                            break;
+                        default:
+                            labelStatusDetail.Text = "Not sure what this palico is doing [" + palicoStatus + "]";
+                            break;
+                    }
+                }
+                else
+                    labelStatusDetail.Text = "How did I get here.. PalicoJob: " + palicoJob + " PalicoTraining: " + palicoTraining + " PalicoStatus: " + palicoStatus;
+            }
+        }
+
+        private void textBoxCoatRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            if (textBoxCoatRGBA.Text.Length == 8)
+            {
+                label19.BackColor = Color.FromArgb(int.Parse(textBoxCoatRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxCoatRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxCoatRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label19.BackColor) > 130 ? Color.Black : Color.White);
+                label19.ForeColor = foreColor;
+            }
+        }
+
+        private void textBoxLeftEyeRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            if (textBoxLeftEyeRGBA.Text.Length == 8)
+            {
+                label20.BackColor = Color.FromArgb(int.Parse(textBoxLeftEyeRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxLeftEyeRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxLeftEyeRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label20.BackColor) > 130 ? Color.Black : Color.White);
+                label20.ForeColor = foreColor;
+            }
+        }
+
+        private void textBoxRightEyeRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            if (textBoxRightEyeRGBA.Text.Length == 8)
+            {
+                label21.BackColor = Color.FromArgb(int.Parse(textBoxRightEyeRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxRightEyeRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxRightEyeRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label21.BackColor) > 130 ? Color.Black : Color.White);
+                label21.ForeColor = foreColor;
+            }
+        }
+
+        private void textBoxVestRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            if (textBoxVestRGBA.Text.Length == 8)
+            {
+                label22.BackColor = Color.FromArgb(int.Parse(textBoxVestRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxVestRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxVestRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label22.BackColor) > 130 ? Color.Black : Color.White);
+                label22.ForeColor = foreColor;
+            }
+        }
+
+        private void textBoxHeadArmorRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            if (textBoxHeadArmorRGBA.Text.Length == 8)
+            {
+                label26.BackColor = Color.FromArgb(int.Parse(textBoxHeadArmorRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxHeadArmorRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxHeadArmorRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label26.BackColor) > 130 ? Color.Black : Color.White);
+                label26.ForeColor = foreColor;
+            }                
+        }
+
+        private void textBoxBodyArmorRGBA_TextChanged(object sender, EventArgs e) //update label background color for result preview
+        {
+            if (textBoxBodyArmorRGBA.Text.Length == 8)
+            {
+                label27.BackColor = Color.FromArgb(int.Parse(textBoxBodyArmorRGBA.Text.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBodyArmorRGBA.Text.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), int.Parse(textBoxBodyArmorRGBA.Text.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+
+                var cb = new ColorBrightness();
+                var foreColor = (cb.PerceivedBrightness(label27.BackColor) > 130 ? Color.Black : Color.White);
+                label27.ForeColor = foreColor;
+            }            
         }
     }
 }

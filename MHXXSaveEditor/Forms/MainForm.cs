@@ -67,23 +67,23 @@ namespace MHXXSaveEditor
 
             if (saveFileRaw.Length == 4726152)
             {
-                MessageBox.Show($"Detected a 3DS save", "3DS");
+                SplashScreen.SaveType(1);
                 toSwitchToolStripMenuItem.Enabled = true;
                 switchMode = false;
             }
             else if (saveFileRaw.Length == SWITCH_SAVE_SIZE)
             {
-                MessageBox.Show($"Detected a MHXX Switch save", "Switch");
+                SplashScreen.SaveType(2);
                 switchMode = true;
             }
             else if (saveFileRaw.Length == MHGU_SAVE_SIZE)
             {
-                MessageBox.Show($"Detected a MHGU Switch save", "Switch");
+                SplashScreen.SaveType(3);
                 switchMode = true;
             }
             else
             {
-                MessageBox.Show($"Invalid save format", "Error");
+                SplashScreen.SaveType(4);
                 return;
             }
 
@@ -98,25 +98,37 @@ namespace MHXXSaveEditor
             // To see which character slots are enabled
             if (saveFile[4] == 1) // First slot
             {
-                currentPlayer = 1;
+                if (currentPlayer != 2 && currentPlayer != 3) //added sanity check for loading a file after a file has been loaded
+                {
+                    currentPlayer = 1;
+                    toolStripMenuItemSaveSlot1.Checked = true;
+                    toolStripMenuItemSaveSlot2.Checked = false;
+                    toolStripMenuItemSaveSlot3.Checked = false;
+
+                }
                 toolStripMenuItemSaveSlot1.Enabled = true;
-                toolStripMenuItemSaveSlot1.Checked = true;
                 slot1ToolStripMenuItem.Enabled = true;
             }
             if (saveFile[5] == 1) // Second slot
             {
-                if (currentPlayer != 1)
+                if (currentPlayer != 1 && currentPlayer != 3) //added sanity check for loading a file after a file has been loaded
                 {
                     currentPlayer = 2;
+                    toolStripMenuItemSaveSlot1.Checked = false;
+                    toolStripMenuItemSaveSlot2.Checked = true;
+                    toolStripMenuItemSaveSlot3.Checked = false;
                 }
                 toolStripMenuItemSaveSlot2.Enabled = true;
                 slot2ToolStripMenuItem.Enabled = true;
             }
             if (saveFile[6] == 1) // Third slot
             {
-                if (currentPlayer != 1 && currentPlayer != 2)
+                if (currentPlayer != 1 && currentPlayer != 2) //added sanity check for loading a file after a file has been loaded
                 {
                     currentPlayer = 3;
+                    toolStripMenuItemSaveSlot1.Checked = false;
+                    toolStripMenuItemSaveSlot2.Checked = false;
+                    toolStripMenuItemSaveSlot3.Checked = true;
                 }
                 toolStripMenuItemSaveSlot3.Enabled = true;
                 slot3ToolStripMenuItem.Enabled = true;
@@ -195,21 +207,41 @@ namespace MHXXSaveEditor
                 saveFile = TransformToSwitchFormat();
             }
             File.WriteAllBytes(filePath, saveFile);
+            if (switchMode)
+            {
+                saveFile = saveFileRaw.Skip(36).ToArray(); //remove headder again
+            }
+            else
+            {
+                saveFile = saveFileRaw;
+            }
+            var ext = new DataExtractor();
+            ext.GetInfo(saveFile, currentPlayer, player); //unpack the save slot again to prevent corruptiopn on repeated saves
+            LoadSave();
             MessageBox.Show("File saved", "Saved !");
         }
 
         private byte[] TransformToSwitchFormat()
         {
-            byte[] switchSaveFile = new byte[MHGU_SAVE_SIZE];
-            byte[] switchHeader = saveFileRaw.Take(36).ToArray();
-            switchHeader.CopyTo(switchSaveFile, 0);
+            if (saveFile.Length == saveFileRaw.Length) //happens when user saved previously and the Switch headder is now appended back onto the save file
+            {
+                saveFile = saveFile.Skip(36).ToArray(); //correct the save size by removing the headder again
+            }
+            else if (saveFile.Length > saveFileRaw.Length)
+            {
+                MessageBox.Show("Trying to write " + saveFile.Length + " bytes of data\nto " + saveFileRaw.Length + " bytes of space\n\nExpect save operation to fail", "ERROR"); //something has gone horribly wrong
+            }
+            byte[] switchSaveFile = saveFileRaw; //corrected to support both MHGU and MHXX data lenghts. Previously overlooked MHXX when modified for MHGU. Adds header in the process
+            //byte[] switchHeader = saveFileRaw.Take(36).ToArray(); // no longer needed with changes above
+            //switchHeader.CopyTo(switchSaveFile, 0); //no longer needed with changes above
             saveFile.CopyTo(switchSaveFile, 36);
+            saveFileRaw = switchSaveFile; //In case any other functions try to extract from the raw save again, this makes it reflect the changes being saved to file
             return switchSaveFile;
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Made by Dawnshifter based on work of Ukee for GBATemp\nBased off APM's MHX/MHGen Save Editor\nAlso thanks to Seth VanHeulen for the Save File structure\nAnd some MHX/MHGen/MHXX hex editing threads in GBATemp", "About");
+            MessageBox.Show("Made by Dawnshifter based on work of Ukee for GBATemp\nBased off APM's MHX/MHGen Save Editor\nAlso thanks to Seth VanHeulen for the Save File structure\nAnd some MHX/MHGen/MHXX hex editing threads in GBATemp\n\nFurther fixes/changes by iSharingan", "About");
         }
 
         public void LoadSave()
@@ -265,9 +297,10 @@ namespace MHXXSaveEditor
             listViewPalico.BeginUpdate();
             for (int a = 0; a < Constants.TOTAL_PALICO_SLOTS; a++)
             {
-                if (Convert.ToInt32(player.PalicoData[a * Constants.SIZEOF_PALICO]) != 0) // Check if first character in name != 0, if != 0 means a palico exist in that block (or at least in my opinion)
+                // if (Convert.ToInt32(player.PalicoData[a * Constants.SIZEOF_PALICO]) != 0) // Check if first character in name != 0, if != 0 means a palico exist in that block (or at least in my opinion) Edit note: this is false, the game accepts null named cats. Palico ID is a better check since it will never be 0 on hired cats
+                if (Convert.ToInt32(player.PalicoData[a * Constants.SIZEOF_PALICO + 85]) != 0) // Check if Palico Action RNG is not 0. Since empty slots are 0 and hired cats are always >= 1, this should allow correction of null cat names (from imported cats)
                 {
-                    byte[] palicoNameByte = new byte[32];
+                    byte[] palicoNameByte = new byte[32]; // reverted change. causes file load issues
                     string palicoName, palicoType;
 
                     Array.Copy(player.PalicoData, a * Constants.SIZEOF_PALICO, palicoNameByte, 0, Constants.SIZEOF_NAME);
@@ -283,7 +316,7 @@ namespace MHXXSaveEditor
                         UseItemStyleForSubItems = false
                     };
                     int palicoDLC = player.PalicoData[(a * Constants.SIZEOF_PALICO) + 0x0E0];
-                    if (palicoDLC > 100)
+                    if (palicoDLC > 127) // DLC cat is flagged by adding 128 to this byte, so this is a perfectly reliable check. Changed from 100
                     {
                         plc.SubItems[1].ForeColor = Color.Green;
                     }
@@ -912,6 +945,8 @@ namespace MHXXSaveEditor
                 if (!i.SubItems[1].Text.Contains("-----"))
                 {
                     i.SubItems[2].Text = "99";
+                    int iteration = Convert.ToInt32(i.SubItems[0].Text) - 1;
+                    player.ItemCount[iteration] = i.SubItems[2].Text; //actually writes the changes. seriously. why was this missing?
                 }
             }
             MessageBox.Show("All item amount have been set to 99");
@@ -1117,6 +1152,8 @@ namespace MHXXSaveEditor
                         if (!i.SubItems[1].Text.Contains("-----"))
                         {
                             i.SubItems[2].Text = val.ToString();
+                            int iteration = Convert.ToInt32(i.SubItems[0].Text) - 1;
+                            player.ItemCount[iteration] = i.SubItems[2].Text; //actually writes the changes. seriously. why was this missing?
                         }
                     }
                 }
@@ -1140,6 +1177,13 @@ namespace MHXXSaveEditor
             {
                 listViewItem.Items[i].SubItems[1].Text = "-----";
                 listViewItem.Items[i].SubItems[2].Text = "0";
+            }
+            //actually writes the changes. why was this missing?
+            foreach (ListViewItem i in listViewItem.Items)
+            {
+                int iteration = Convert.ToInt32(i.SubItems[0].Text) - 1;
+                player.ItemId[iteration] = Array.IndexOf(GameConstants.ItemNameList, i.SubItems[1].Text).ToString();
+                player.ItemCount[iteration] = i.SubItems[2].Text;
             }
 
             MessageBox.Show("Duplicate items have been removed");
@@ -1168,9 +1212,9 @@ namespace MHXXSaveEditor
 
         private void VisitGithubPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you wish visit Github page?", "Visit Github", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+            if (MessageBox.Show("Do you wish visit the source Github for this version?", "Visit Github", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
             {
-                System.Diagnostics.Process.Start("https://github.com/mineminemine/MHXXSaveEditor");
+                System.Diagnostics.Process.Start("https://github.com/iSharingan/MHXXSaveEditor");
             }
         }
 
@@ -1187,13 +1231,21 @@ namespace MHXXSaveEditor
             }
 
             if (savefile.ShowDialog() == DialogResult.OK)
+            {
                 File.WriteAllBytes(savefile.FileName, saveFile);
-            MessageBox.Show("File saved", "Saved !");
-        }
-
-        private void SaveFile()
-        {
-
+            }
+            if (switchMode)
+            {
+                saveFile = saveFileRaw.Skip(36).ToArray();
+            }
+            else
+            {
+                saveFile = saveFileRaw;
+            }
+            var ext = new DataExtractor();
+            ext.GetInfo(saveFile, currentPlayer, player); //unpack the save slot again to prevent corruptiopn on repeated saves
+            LoadSave();
+            MessageBox.Show("File saved as " + savefile.FileName, "Saved !");
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1293,7 +1345,7 @@ namespace MHXXSaveEditor
                 saveFile[6] = 0;
             }
 
-            Array.Copy(Properties.Resources.CleanSave, 0, saveFile, theOffset, Properties.Resources.CleanSave.Length);
+            Array.Copy(MHGenUSaveEditor.Properties.Resources.CleanSave, 0, saveFile, theOffset, MHGenUSaveEditor.Properties.Resources.CleanSave.Length);
             File.WriteAllBytes(filePath, saveFile);
             MessageBox.Show("The save slot has been deleted", "Save slot " + slotNumber +  "deleted");
             MessageBox.Show("This program will now restart");
@@ -1576,7 +1628,7 @@ namespace MHXXSaveEditor
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            player.
+            // player. //this line appears to be broken when compiling commenting out. Unsure of use/purpose as it is not commneted
         }
 
         private void ListViewPalicoEquipment_SelectedIndexChanged(object sender, EventArgs e)
