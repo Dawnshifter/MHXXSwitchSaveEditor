@@ -1432,13 +1432,138 @@ namespace MHXXSaveEditor
         private void ExportToToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             SaveFileDialog exportFile = new SaveFileDialog();
-            exportFile.Filter = "MHXX Equipment Box File (.eqpboXX) | *.eqpboXX";
+            exportFile.Filter = "Athena'a ASS|*.txt|wiki-db|*.csv|MHXX Equipment Box File|*.eqpboXX";
 
             if (exportFile.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllBytes(exportFile.FileName.ToString(), player.EquipmentInfo);
+                switch (exportFile.FilterIndex) // Order in exportFile.Filter, starting from 1
+                {
+                    case 1:
+                        /* Athena'a ASS:
+                           Format is
+                             1,Sheathing,11,Expert,3
+                             1,,,Expert,3
+                           for
+                             Sheathing 11, Expert 3, slots 1
+                             Expert 3, ----, slots 1
+                        */
+                        ExtractTalismansAsASS(exportFile);
+                        break;
+                    case 2:
+                        /* wiki-db:
+                           Format is
+                             ,1,Sheathing,11,Expert,3
+                             ,1,Expert,3
+                           for
+                             Sheathing 11, Expert 3, slots 1
+                             Expert 3, ----, slots 1
+                        */
+                        ExtractTalismansAsWikiDB(exportFile);
+                        break;
+                    case 3:
+                        // MHXX Equipment Box File
+                        File.WriteAllBytes(exportFile.FileName.ToString(), player.EquipmentInfo);
+                        break;
+                }
 
                 MessageBox.Show("Equipment Box has been exported to " + exportFile.FileName.ToString(), "Export Equipment Box");
+            }
+        }
+
+        private void ExtractTalismansAsWikiDB(SaveFileDialog exportFile)
+        {
+            var skillNames = GameConstants.SkillNames;
+            if (saveFileRaw.Length == MHGU_SAVE_SIZE)
+            {
+                skillNames = GameConstants.MHGUSkillNames;
+            }
+            
+            using (StreamWriter writetext = new StreamWriter(exportFile.FileName))
+            {
+                for (int a = 0; a < Constants.TOTAL_EQUIP_SLOTS; a++) // 2000 slots for 2000 equips
+                {
+                    string typeLevelBits = Convert.ToString(player.EquipmentInfo[(a * 36) + 1], 2).PadLeft(8, '0') + Convert.ToString(player.EquipmentInfo[a * 36], 2).PadLeft(8, '0'); // One byte == the eqp type and level; 7 bits level on left hand side, then right hand side 5 bits eq type
+                    var equipTypeID = Convert.ToInt32(typeLevelBits.Substring(11, 5), 2);
+
+                    try
+                    {
+                        if (equipTypeID == 0)
+                        {
+                            // No more items, stop loop
+                            break;
+                        }
+
+                        // Talisman
+                        if (equipTypeID == 6)
+                        {
+                            var slotCount = player.EquipmentInfo[(a * 36) + 16];
+                            var skill1 = skillNames[player.EquipmentInfo[(a * 36) + 12]];
+                            if (skill1 != "")
+                            {
+                                var skillLevel1 = (sbyte)player.EquipmentInfo[(a * 36) + 14];
+                                skill1 = $",{skill1},{skillLevel1}";
+
+                            }
+                            var skill2 = skillNames[player.EquipmentInfo[(a * 36) + 13]];
+                            if (skill2 != "")
+                            {
+                                var skillLevel2 = (sbyte)player.EquipmentInfo[(a * 36) + 15];
+                                skill2 = $",{skill2},{skillLevel2}";
+                            }
+
+                            writetext.WriteLine($",{slotCount}{skill1}{skill2}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // Do nothing
+                        continue;
+                    }
+                }
+            }
+        }
+        
+        private void ExtractTalismansAsASS(SaveFileDialog exportFile)
+        {
+            var skillNames = GameConstants.SkillNames;
+            if (saveFileRaw.Length == MHGU_SAVE_SIZE)
+            {
+                skillNames = GameConstants.MHGUSkillNames;
+            }
+            
+            using (StreamWriter writetext = new StreamWriter(exportFile.FileName))
+            {
+                for (int a = 0; a < Constants.TOTAL_EQUIP_SLOTS; a++) // 2000 slots for 2000 equips
+                {
+                    string typeLevelBits = Convert.ToString(player.EquipmentInfo[(a * 36) + 1], 2).PadLeft(8, '0') + Convert.ToString(player.EquipmentInfo[a * 36], 2).PadLeft(8, '0'); // One byte == the eqp type and level; 7 bits level on left hand side, then right hand side 5 bits eq type
+                    var equipTypeID = Convert.ToInt32(typeLevelBits.Substring(11, 5), 2);
+
+                    try
+                    {
+                        if (equipTypeID == 0)
+                        {
+                            // No more items, stop loop
+                            break;
+                        }
+
+                        // Talisman
+                        if (equipTypeID == 6)
+                        {
+                            var slotCount = player.EquipmentInfo[(a * 36) + 16];
+                            var skillName1 = skillNames[player.EquipmentInfo[(a * 36) + 12]];
+                            var skillLevel1 = (sbyte)player.EquipmentInfo[(a * 36) + 14];
+                            var skillName2 = skillNames[player.EquipmentInfo[(a * 36) + 13]];
+                            var skillLevel2 = (sbyte)player.EquipmentInfo[(a * 36) + 15];
+
+                            writetext.WriteLine($"{slotCount},{skillName1},{skillLevel1},{skillName2},{skillLevel2}");
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // Do nothing
+                        continue;
+                    }
+                }
             }
         }
 
@@ -1572,11 +1697,6 @@ namespace MHXXSaveEditor
             MessageBox.Show("File saved", "Saved !");
 
             MessageBox.Show($"You are now editing the switch version of this save", "Conversion complete");
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            player.
         }
 
         private void ListViewPalicoEquipment_SelectedIndexChanged(object sender, EventArgs e)
