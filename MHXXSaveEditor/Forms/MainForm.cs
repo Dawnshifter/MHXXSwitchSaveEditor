@@ -1379,20 +1379,36 @@ namespace MHXXSaveEditor
         private void ExportToToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog exportFile = new SaveFileDialog();
-            exportFile.Filter = "MHXX Item Box File (.itemXX) | *.itemXX";
+            exportFile.Filter = "MHXX Item Box File (.itemXX) | *.itemXX | CSV file (.csv) | *.csv";
 
             if (exportFile.ShowDialog() == DialogResult.OK)
             {
                 string amount, id;
-
                 using (var tw = new StreamWriter(exportFile.FileName.ToString()))
                 {
-                    foreach (ListViewItem item in listViewItem.Items)
+                    switch(exportFile.FilterIndex)
                     {
-                        id = Array.IndexOf(GameConstants.ItemNameList, item.SubItems[1].Text).ToString();
-                        amount = item.SubItems[2].Text;
+                        case 1:
+                            foreach (ListViewItem item in listViewItem.Items)
+                            {
+                                id = Array.IndexOf(GameConstants.ItemNameList, item.SubItems[1].Text).ToString();
+                                amount = item.SubItems[2].Text;
 
-                        tw.WriteLine(id + "," + amount);
+                                tw.WriteLine(id + "," + amount);
+                            }
+                            break;
+                        case 2:
+                            string name;
+                            foreach(ListViewItem item in listViewItem.Items)
+                            {
+                                id = Array.IndexOf(GameConstants.ItemNameList, item.SubItems[1].Text).ToString();
+                                name = item.SubItems[1].Text;
+                                amount = item.SubItems[2].Text;
+
+                                tw.WriteLine(id + ";" + name + ";" + amount);
+                            }
+                            break;
+                        default: throw new Exception("Unrecognised Export Type");
                     }
                 }
 
